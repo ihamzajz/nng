@@ -5,7 +5,14 @@ declare(strict_types=1);
 if (!function_exists('api_base_url')) {
     function api_base_url(): string
     {
-        return (string) config('api_base_url', 'https://api.abc.com');
+        return (string) config('api', 'http://localhost:5000');
+    }
+}
+
+if (!function_exists('api')) {
+    function api(string $endpoint = ''): string
+    {
+        return api_url($endpoint);
     }
 }
 
@@ -27,7 +34,7 @@ if (!function_exists('api_request')) {
         array $headers = [],
         ?string $token = null
     ): array {
-        $url = api_url($endpoint);
+        $url = api($endpoint);
         $method = strtoupper($method);
         $curl = curl_init();
 

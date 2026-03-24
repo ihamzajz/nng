@@ -7,38 +7,35 @@ if (is_logged_in()) {
 }
 
 $appName = (string) config('app_name', 'NNGK');
-$errorMessage = $_SESSION['auth_error'] ?? '';
-$successMessage = $_SESSION['auth_success'] ?? '';
-unset($_SESSION['auth_error'], $_SESSION['auth_success']);
-
-$identifier = '';
+$errorMessage = '';
+$name = '';
+$username = '';
+$email = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $identifier = trim((string) ($_POST['login'] ?? ''));
+    $name = trim((string) ($_POST['name'] ?? ''));
+    $username = trim((string) ($_POST['username'] ?? ''));
+    $email = trim((string) ($_POST['email'] ?? ''));
     $password = (string) ($_POST['password'] ?? '');
 
-    if ($identifier === '' || $password === '') {
-        $errorMessage = 'Please enter your email/username and password.';
+    if ($name === '' || $username === '' || $email === '' || $password === '') {
+        $errorMessage = 'Please fill all required fields.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errorMessage = 'Please enter a valid email address.';
     } else {
-        $apiResponse = api_request('POST', 'api/auth/login', [
-            'identifier' => $identifier,
+        $apiResponse = api_request('POST', 'api/auth/register', [
+            'name' => $name,
+            'username' => $username,
+            'email' => $email,
             'password' => $password,
         ]);
 
         if ($apiResponse['success']) {
-            $responseData = is_array($apiResponse['data']) ? $apiResponse['data'] : [];
-            $token = extract_auth_token($responseData);
-
-            if ($token !== null) {
-                $user = extract_auth_user($responseData, $identifier);
-                login_user($user, $token);
-                redirect('dashboard');
-            }
-
-            $errorMessage = 'Login response did not include a token.';
-        } else {
-            $errorMessage = extract_api_error_message($apiResponse);
+            $_SESSION['auth_success'] = 'Registration successful. Please login with your new account.';
+            redirect('login');
         }
+
+        $errorMessage = extract_api_error_message($apiResponse);
     }
 }
 ?>
@@ -48,12 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo htmlspecialchars($appName, ENT_QUOTES, 'UTF-8'); ?> - Login</title>
+    <title><?php echo htmlspecialchars($appName, ENT_QUOTES, 'UTF-8'); ?> - Register</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
-<body class="page-login">
+<body class="page-register page-login">
     <div class="bg-blur"></div>
 
     <div class="min-vh-100 d-flex align-items-center justify-content-center p-3">
@@ -75,32 +72,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <h4 class="fw-bold mb-3">Sign in</h4>
+                        <h4 class="fw-bold mb-3">Create account</h4>
 
                         <form method="POST" autocomplete="off" novalidate>
                             <div class="mb-3">
-                                <label for="login" class="form-label fw-semibold">Email or Username</label>
-                                <input class="form-control" id="login" name="login" type="text"
-                                    placeholder="Enter email or username" value="<?php echo htmlspecialchars($identifier, ENT_QUOTES, 'UTF-8'); ?>" required>
+                                <label for="name" class="form-label fw-semibold">Full Name</label>
+                                <input class="form-control" id="name" name="name" type="text"
+                                    placeholder="Enter your full name" value="<?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?>" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="username" class="form-label fw-semibold">Username</label>
+                                <input class="form-control" id="username" name="username" type="text"
+                                    placeholder="Choose a username" value="<?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-semibold">Email</label>
+                                <input class="form-control" id="email" name="email" type="email"
+                                    placeholder="Enter your email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="password" class="form-label fw-semibold">Password</label>
                                 <div class="pw-split">
                                     <input class="form-control pw-input" id="password" name="password" type="password"
-                                        placeholder="Enter password" required>
+                                        placeholder="Create password" required>
                                     <button type="button" class="pw-toggle" id="togglePw">Show</button>
                                 </div>
                             </div>
 
-                            <button class="btn btn-primary w-100" type="submit">Login</button>
+                            <button class="btn btn-primary w-100" type="submit">Register</button>
 
                             <div class="msg-slot mt-2">
-                                <?php if ($successMessage !== ''): ?>
-                                    <div class="alert alert-success mb-2 py-2" role="alert">
-                                        <?php echo htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8'); ?>
-                                    </div>
-                                <?php endif; ?>
                                 <?php if ($errorMessage !== ''): ?>
                                     <div class="alert alert-danger mb-0 py-2" role="alert">
                                         <?php echo htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8'); ?>
@@ -109,8 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
 
                             <p class="text-center mt-3 mb-0 text-secondary">
-                                Don't have an account?
-                                <a href="register" class="text-decoration-none fw-semibold">Create one</a>
+                                Already have an account?
+                                <a href="login" class="text-decoration-none fw-semibold">Login here</a>
                             </p>
                         </form>
                     </div>

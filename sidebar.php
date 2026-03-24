@@ -1,5 +1,12 @@
-<?php require_once __DIR__ . '/bootstrap.php'; ?>
+<?php
 
+require_once __DIR__ . '/bootstrap.php';
+
+$sidebarUserName = auth_user_name();
+$sidebarUserRole = auth_user_role();
+$sidebarUserEmail = auth_user_email();
+$sidebarUserInitial = auth_user_initial();
+?>
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
@@ -263,7 +270,7 @@ display:none;
 
 <div class="sidebar__top">
 
-<a href="#" class="brand">
+<a href="dashboard" class="brand">
 <span class="brand__logo"><i class="fa-solid fa-dumbbell"></i></span>
 <span class="brand__text">NNGK</span>
 </a>
@@ -308,11 +315,11 @@ display:none;
 <div class="sidebar__bottom">
 
 <div class="userbottom">
-<div class="userbottom__avatar">J</div>
+<div class="userbottom__avatar"><?php echo htmlspecialchars($sidebarUserInitial, ENT_QUOTES, 'UTF-8'); ?></div>
 
 <div class="user-info">
-<div class="user-name">John Doe</div>
-<div class="user-role">Admin</div>
+<div class="user-name"><?php echo htmlspecialchars($sidebarUserName, ENT_QUOTES, 'UTF-8'); ?></div>
+<div class="user-role"><?php echo htmlspecialchars($sidebarUserEmail !== '' ? $sidebarUserEmail : $sidebarUserRole, ENT_QUOTES, 'UTF-8'); ?></div>
 </div>
 
 </div>

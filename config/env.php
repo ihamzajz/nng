@@ -18,7 +18,7 @@ if (!function_exists('load_env')) {
         foreach ($lines as $line) {
             $trimmedLine = trim($line);
 
-            if ($trimmedLine === '' || str_starts_with($trimmedLine, '#')) {
+            if ($trimmedLine === '' || strpos($trimmedLine, '#') === 0) {
                 continue;
             }
 

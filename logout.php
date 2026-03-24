@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/bootstrap.php';
 
+logout_user();
+
 $_SESSION = [];
 
 if (ini_get('session.use_cookies')) {

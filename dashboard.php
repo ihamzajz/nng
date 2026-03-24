@@ -1,5 +1,11 @@
-<?php require_once __DIR__ . '/bootstrap.php'; ?>
+<?php
 
+require_once __DIR__ . '/bootstrap.php';
+
+require_auth();
+
+$userName = auth_user_name();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,10 +22,11 @@
 
 <body class="page-dashboard">
 
-<?php include "sidebar.php"; ?>
+<?php include 'sidebar.php'; ?>
 
 <main class="app style-dashboard-001">
 <h1>Welcome to NNGK Dashboard</h1>
+<p>Hello, <?php echo htmlspecialchars($userName, ENT_QUOTES, 'UTF-8'); ?>. You are logged in successfully.</p>
 
 <div class="dashboard-container">
 

@@ -748,19 +748,22 @@
             });
 })();
 
-// login
+// auth pages
 (() => {
-    if (!document.body.classList.contains('page-login')) return;
+    if (!document.body.classList.contains('page-login') && !document.body.classList.contains('page-register')) return;
 
     const pw = document.getElementById('password');
-            const btn = document.getElementById('togglePw');
+    const btn = document.getElementById('togglePw');
 
-            btn.addEventListener('click', () => {
-                const hidden = pw.type === 'password';
-                pw.type = hidden ? 'text' : 'password';
-                btn.textContent = hidden ? 'Hide' : 'Show';
-            });
+    if (!pw || !btn) return;
+
+    btn.addEventListener('click', () => {
+        const hidden = pw.type === 'password';
+        pw.type = hidden ? 'text' : 'password';
+        btn.textContent = hidden ? 'Hide' : 'Show';
+    });
 })();
+
 
 // membership
 (() => {

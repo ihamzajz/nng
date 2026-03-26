@@ -186,3 +186,4 @@ if (!function_exists('extract_api_error_message')) {
         return 'Login failed. Please try again.';
     }
 }
+

@@ -229,7 +229,7 @@ body.page-court-history .empty-action { margin-top:14px; }
             <div>
                 <h1>Court Booking History</h1>
             </div>
-            <a href="court_form" class="btn btn-primary"><i class="fa-solid fa-plus"></i><span>New Booking</span></a>
+            <a href="<?php echo htmlspecialchars(app_url('court_form'), ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-primary"><i class="fa-solid fa-plus"></i><span>New Booking</span></a>
         </div>
     </div>
 
@@ -339,7 +339,7 @@ body.page-court-history .empty-action { margin-top:14px; }
             <p class="empty-title">No court requests yet</p>
             <p class="empty-text">Your court booking requests will appear here once you submit them.</p>
             <div class="empty-action">
-                <a href="court_form" class="btn btn-primary">Open Booking Center</a>
+                <a href="<?php echo htmlspecialchars(app_url('court_form'), ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-primary">Open Booking Center</a>
             </div>
         </div>
     <?php endif; ?>

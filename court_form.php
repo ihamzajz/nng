@@ -405,7 +405,7 @@ body.page-court-form .image-viewer-img { max-width:100%; max-height:100%; width:
             <div>
                 <h1>Court Booking</h1>
             </div>
-            <a href="court_history" class="btn btn-history"><i class="fa-solid fa-clock-rotate-left"></i><span>View History</span></a>
+            <a href="<?php echo htmlspecialchars(app_url('court_history'), ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-history"><i class="fa-solid fa-clock-rotate-left"></i><span>View History</span></a>
         </div>
     </div>
 

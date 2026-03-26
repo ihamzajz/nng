@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <p class="text-center mt-3 mb-0 text-secondary">
                                 Don't have an account?
-                                <a href="register" class="text-decoration-none fw-semibold">Create one</a>
+<a href="<?php echo htmlspecialchars(app_url('register'), ENT_QUOTES, 'UTF-8'); ?>" class="text-decoration-none fw-semibold">Create one</a>
                             </p>
                         </form>
                     </div>

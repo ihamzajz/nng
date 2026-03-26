@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <p class="text-center mt-3 mb-0 text-secondary">
                                 Already have an account?
-                                <a href="login" class="text-decoration-none fw-semibold">Login here</a>
+<a href="<?php echo htmlspecialchars(app_url('login'), ENT_QUOTES, 'UTF-8'); ?>" class="text-decoration-none fw-semibold">Login here</a>
                             </p>
                         </form>
                     </div>

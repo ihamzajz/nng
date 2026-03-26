@@ -141,7 +141,7 @@ $userName = auth_user_name();
 
     <!-- Court Box -->
     <div class="col-lg-3 col-md-4 col-sm-6">
-      <a href="court_form" class="wt-link">
+<a href="<?php echo htmlspecialchars(app_url('court_form'), ENT_QUOTES, 'UTF-8'); ?>" class="wt-link">
         <div class="wt-card">
           <div class="wt-icon bg-blue">
             <i class="fa-solid fa-gavel"></i>
@@ -156,7 +156,7 @@ $userName = auth_user_name();
 
     <!-- Event Box -->
     <div class="col-lg-3 col-md-4 col-sm-6">
-      <a href="event_form" class="wt-link">
+<a href="<?php echo htmlspecialchars(app_url('event_form'), ENT_QUOTES, 'UTF-8'); ?>" class="wt-link">
         <div class="wt-card">
           <div class="wt-icon bg-green">
             <i class="fa-solid fa-calendar-days"></i>

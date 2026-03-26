@@ -21,3 +21,20 @@ if (!function_exists('config')) {
         return $config[$key] ?? $default;
     }
 }
+
+if (!function_exists('app_url')) {
+    function app_url(string $path = ''): string
+    {
+        $baseUrl = rtrim((string) config('app_url', 'http://localhost/nng'), '/');
+        $path = ltrim($path, '/');
+
+        return $path === '' ? $baseUrl : $baseUrl . '/' . $path;
+    }
+}
+
+if (!function_exists('asset_url')) {
+    function asset_url(string $path = ''): string
+    {
+        return app_url($path);
+    }
+}

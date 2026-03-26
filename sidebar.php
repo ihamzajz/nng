@@ -164,51 +164,6 @@ body.sb-collapsed .nav-caret{
 display:none;
 }
 
-/* CARET */
-
-.nav-caret{
-margin-left:auto;
-font-size:11px;
-transition:transform .25s;
-}
-
-/* SUBMENU */
-
-.submenu{
-display:none;
-flex-direction:column;
-margin-left:28px;
-margin-top:6px;
-padding-left:12px;
-border-left:1px solid rgba(255,255,255,.15);
-}
-
-.nav-item.active + .submenu{
-display:flex;
-}
-
-.nav-item.active .nav-caret{
-transform:rotate(180deg);
-}
-
-.submenu-item{
-padding:6px 8px;
-font-size:12px;
-color:#ddd;
-text-decoration:none;
-border-radius:6px;
-position:relative;
-}
-
-.submenu-item:hover{
-background:rgba(255,255,255,.08);
-color:white;
-}
-
-body.sb-collapsed .submenu{
-display:none;
-}
-
 /* BOTTOM */
 
 .sidebar__bottom{
@@ -270,7 +225,7 @@ display:none;
 
 <div class="sidebar__top">
 
-<a href="dashboard" class="brand">
+<a href="<?php echo htmlspecialchars(app_url('dashboard'), ENT_QUOTES, 'UTF-8'); ?>" class="brand">
 <span class="brand__logo"><i class="fa-solid fa-dumbbell"></i></span>
 <span class="brand__text">NNGK</span>
 </a>
@@ -283,31 +238,29 @@ display:none;
 
 <nav class="sidebar__nav">
 
-<button class="nav-item">
-<span class="nav-icon"><i class="fa-solid fa-calendar"></i></span>
-<span class="nav-text">Booking</span>
-<span class="nav-caret"><i class="fa-solid fa-chevron-down"></i></span>
-</button>
+<a class="nav-item" href="<?php echo htmlspecialchars(app_url('dashboard'), ENT_QUOTES, 'UTF-8'); ?>">
+<span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+<span class="nav-text">Home</span>
+</a>
 
-<div class="submenu">
-<a class="submenu-item" href="court_form">Court</a>
-<a class="submenu-item" href="event_form">Event</a>
-</div>
+<a class="nav-item" href="<?php echo htmlspecialchars(app_url('court_form'), ENT_QUOTES, 'UTF-8'); ?>">
+<span class="nav-icon"><i class="fa-solid fa-table-tennis-paddle-ball"></i></span>
+<span class="nav-text">Court</span>
+</a>
 
-<button class="nav-item">
-<span class="nav-icon"><i class="fa-solid fa-clock"></i></span>
-<span class="nav-text">History</span>
-<span class="nav-caret"><i class="fa-solid fa-chevron-down"></i></span>
-</button>
+<a class="nav-item" href="<?php echo htmlspecialchars(app_url('event_form'), ENT_QUOTES, 'UTF-8'); ?>">
+<span class="nav-icon"><i class="fa-solid fa-calendar-check"></i></span>
+<span class="nav-text">Event</span>
+</a>
 
-<div class="submenu">
-<a class="submenu-item" href="court_history">Court</a>
-<a class="submenu-item" href="event_history">Event</a>
-</div>
-
-<a class="nav-item" href="admin_panel">
+<a class="nav-item" href="<?php echo htmlspecialchars(app_url('admin_panel'), ENT_QUOTES, 'UTF-8'); ?>">
 <span class="nav-icon"><i class="fa-solid fa-user-gear"></i></span>
 <span class="nav-text">Admin Panel</span>
+</a>
+
+<a class="nav-item" href="<?php echo htmlspecialchars(app_url(''), ENT_QUOTES, 'UTF-8'); ?>">
+<span class="nav-icon"><i class="fa-solid fa-globe"></i></span>
+<span class="nav-text">Go To Website</span>
 </a>
 
 </nav>
@@ -324,12 +277,12 @@ display:none;
 
 </div>
 
-<a class="nav-item" href="profile">
+<a class="nav-item" href="<?php echo htmlspecialchars(app_url('profile'), ENT_QUOTES, 'UTF-8'); ?>">
 <span class="nav-icon"><i class="fa-solid fa-user"></i></span>
 <span class="nav-text">Profile</span>
 </a>
 
-<a class="nav-item" href="logout">
+<a class="nav-item" href="<?php echo htmlspecialchars(app_url('logout'), ENT_QUOTES, 'UTF-8'); ?>">
 <span class="nav-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
 <span class="nav-text">Logout</span>
 </a>
@@ -345,25 +298,5 @@ display:none;
 document.getElementById("sidebarToggle").onclick=function(){
 document.body.classList.toggle("sb-collapsed");
 };
-
-/* dropdown */
-
-document.querySelectorAll(".sidebar__nav .nav-item").forEach(btn=>{
-
-btn.addEventListener("click",function(){
-
-const submenu=this.nextElementSibling;
-
-if(!submenu || !submenu.classList.contains("submenu")) return;
-
-document.querySelectorAll(".sidebar__nav .nav-item").forEach(i=>{
-if(i!==this) i.classList.remove("active");
-});
-
-this.classList.toggle("active");
-
-});
-
-});
 
 </script>

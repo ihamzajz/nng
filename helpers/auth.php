@@ -56,8 +56,37 @@ if (!function_exists('require_auth')) {
     function require_auth(): void
     {
         if (!is_logged_in()) {
-            $_SESSION['auth_error'] = 'Please login to continue.';
-            redirect('login');
+            redirect('unauthorized');
+        }
+    }
+}
+
+if (!function_exists('auth_is_admin')) {
+    function auth_is_admin(): bool
+    {
+        $user = auth_user();
+
+        foreach (['role', 'userType', 'user_type', 'type'] as $key) {
+            if (!empty($user[$key]) && is_string($user[$key])) {
+                $role = strtolower(trim($user[$key]));
+
+                if (in_array($role, ['admin', 'superadmin'], true)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+}
+
+if (!function_exists('require_admin')) {
+    function require_admin(): void
+    {
+        require_auth();
+
+        if (!auth_is_admin()) {
+            redirect('unauthorized');
         }
     }
 }
@@ -138,16 +167,38 @@ if (!function_exists('extract_auth_token')) {
 if (!function_exists('extract_auth_user')) {
     function extract_auth_user(array $responseData, string $identifier = ''): array
     {
+        $flatUserKeys = ['id', 'name', 'username', 'email', 'cm_no', 'role', 'status', 'can_book', 'fees_status'];
+        $flatUser = [];
+
+        foreach ($flatUserKeys as $key) {
+            if (array_key_exists($key, $responseData)) {
+                $flatUser[$key] = $responseData[$key];
+            }
+        }
+
         $possibleUsers = [
+            $flatUser !== [] ? $flatUser : null,
             $responseData['user'] ?? null,
         ];
 
         if (isset($responseData['data']) && is_array($responseData['data'])) {
-            $possibleUsers[] = $responseData['data']['user'] ?? null;
+            if (isset($responseData['data']['user']) && is_array($responseData['data']['user'])) {
+                $possibleUsers[] = $responseData['data']['user'];
+            } else {
+                $nestedFlatUser = [];
+
+                foreach ($flatUserKeys as $key) {
+                    if (array_key_exists($key, $responseData['data'])) {
+                        $nestedFlatUser[$key] = $responseData['data'][$key];
+                    }
+                }
+
+                $possibleUsers[] = $nestedFlatUser !== [] ? $nestedFlatUser : null;
+            }
         }
 
         foreach ($possibleUsers as $candidate) {
-            if (is_array($candidate)) {
+            if (is_array($candidate) && $candidate !== []) {
                 return $candidate;
             }
         }
@@ -186,4 +237,6 @@ if (!function_exists('extract_api_error_message')) {
         return 'Login failed. Please try again.';
     }
 }
+
+
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 require_once __DIR__ . '/bootstrap.php';
 
 if (is_logged_in()) {
@@ -8,20 +10,25 @@ if (is_logged_in()) {
 
 $appName = (string) config('app_name', 'NNGK');
 $errorMessage = '';
+$successMessage = '';
 $name = '';
 $username = '';
 $email = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim((string) ($_POST['name'] ?? ''));
-    $username = trim((string) ($_POST['username'] ?? ''));
-    $email = trim((string) ($_POST['email'] ?? ''));
+    $username = strtolower(trim((string) ($_POST['username'] ?? '')));
+    $email = strtolower(trim((string) ($_POST['email'] ?? '')));
     $password = (string) ($_POST['password'] ?? '');
 
     if ($name === '' || $username === '' || $email === '' || $password === '') {
-        $errorMessage = 'Please fill all required fields.';
+        $errorMessage = 'Please fill in all fields.';
+    } elseif (!preg_match('/^[a-zA-Z0-9._-]{3,}$/', $username)) {
+        $errorMessage = 'Username must be at least 3 characters and use letters/numbers.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errorMessage = 'Please enter a valid email address.';
+    } elseif (strlen($password) < 6) {
+        $errorMessage = 'Password must be at least 6 characters.';
     } else {
         $apiResponse = api_request('POST', 'api/auth/register', [
             'name' => $name,
@@ -31,11 +38,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
         if ($apiResponse['success']) {
-            $_SESSION['auth_success'] = 'Registration successful. Please login with your new account.';
-            redirect('login');
+            $responseData = is_array($apiResponse['data']) ? $apiResponse['data'] : [];
+            $successMessage = !empty($responseData['message']) && is_string($responseData['message'])
+                ? $responseData['message']
+                : 'Registered successfully. Await admin approval.';
+
+            $name = '';
+            $username = '';
+            $email = '';
         }
 
-        $errorMessage = extract_api_error_message($apiResponse);
+        if (!$apiResponse['success']) {
+            $errorMessage = extract_api_error_message($apiResponse);
+        }
     }
 }
 ?>
@@ -45,9 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo htmlspecialchars($appName, ENT_QUOTES, 'UTF-8'); ?> - Register</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+<title><?php echo htmlspecialchars($appName, ENT_QUOTES, 'UTF-8'); ?> - Register</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="icon" type="image/png" href="<?php echo htmlspecialchars(asset_url('assets/images/icon.png'), ENT_QUOTES, 'UTF-8'); ?>">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body class="page-register page-login">
@@ -74,7 +91,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <h4 class="fw-bold mb-3">Create account</h4>
 
-                        <form method="POST" autocomplete="off" novalidate>
+                        <form method="POST" autocomplete="off" novalidate id="registerForm">
+                            <div class="msg-slot mb-2">
+                                <?php if ($successMessage !== ''): ?>
+                                    <div class="alert alert-success mb-2 py-2" role="alert">
+                                        <?php echo htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8'); ?>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($errorMessage !== ''): ?>
+                                    <div class="alert alert-danger mb-0 py-2" role="alert">
+                                        <?php echo htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8'); ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
                             <div class="mb-3">
                                 <label for="name" class="form-label fw-semibold">Full Name</label>
                                 <input class="form-control" id="name" name="name" type="text"
@@ -97,20 +127,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label for="password" class="form-label fw-semibold">Password</label>
                                 <div class="pw-split">
                                     <input class="form-control pw-input" id="password" name="password" type="password"
-                                        placeholder="Create password" required>
+                                        placeholder="Minimum 6 characters" required>
                                     <button type="button" class="pw-toggle" id="togglePw">Show</button>
                                 </div>
                             </div>
 
                             <button class="btn btn-primary w-100" type="submit">Register</button>
-
-                            <div class="msg-slot mt-2">
-                                <?php if ($errorMessage !== ''): ?>
-                                    <div class="alert alert-danger mb-0 py-2" role="alert">
-                                        <?php echo htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8'); ?>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
 
                             <p class="text-center mt-3 mb-0 text-secondary">
                                 Already have an account?
@@ -124,6 +146,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script src="assets/js/main.js"></script>
+    <?php if ($successMessage !== ''): ?>
+    <script>
+        window.setTimeout(() => {
+            window.location.href = <?php echo json_encode(app_url('login')); ?>;
+        }, 900);
+    </script>
+    <?php endif; ?>
 </body>
 
 </html>

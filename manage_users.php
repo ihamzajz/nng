@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/bootstrap.php';
 
-require_auth();
+require_admin();
 
 if (!function_exists('manage_users_array_is_list')) {
     function manage_users_array_is_list(array $array): bool
@@ -230,6 +230,7 @@ if (isset($_GET['ajax'])) {
 <title>Manage Users | NNGK</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" referrerpolicy="no-referrer" />
+<link rel="icon" type="image/png" href="<?php echo htmlspecialchars(asset_url('assets/images/icon.png'), ENT_QUOTES, 'UTF-8'); ?>">
 <link rel="stylesheet" href="<?php echo htmlspecialchars(asset_url('assets/css/style.css'), ENT_QUOTES, 'UTF-8'); ?>">
 <style>
 body.page-manage-users { font-family:'Poppins',sans-serif; background:#eef3f8; color:#212529; }

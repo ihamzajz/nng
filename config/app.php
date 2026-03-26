@@ -26,9 +26,19 @@ if (!function_exists('app_url')) {
     function app_url(string $path = ''): string
     {
         $baseUrl = rtrim((string) config('app_url', 'http://localhost/nng'), '/');
-        $path = ltrim($path, '/');
+        $trimmedPath = trim($path);
 
-        return $path === '' ? $baseUrl : $baseUrl . '/' . $path;
+        if ($trimmedPath === '' || $trimmedPath === 'index' || $trimmedPath === 'index.php') {
+            return $baseUrl;
+        }
+
+        if (preg_match('/^https?:\/\//i', $trimmedPath) === 1) {
+            return $trimmedPath;
+        }
+
+        $path = ltrim($trimmedPath, '/');
+
+        return $baseUrl . '/' . $path;
     }
 }
 

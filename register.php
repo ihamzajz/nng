@@ -79,6 +79,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="col-lg-6">
                     <div class="p-4 p-lg-5">
+                        <div class="text-center mb-3">
+                            <a href="<?php echo htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8'); ?>" class="text-decoration-none fw-semibold">Go To Website</a>
+                        </div>
+
                         <div class="d-flex align-items-center gap-2 mb-3">
                             <div class="rounded-3 d-flex align-items-center justify-content-center fw-bold style-login-003">
                                 <?php echo htmlspecialchars(strtoupper(substr($appName, 0, 1)), ENT_QUOTES, 'UTF-8'); ?>

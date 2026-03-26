@@ -47,7 +47,8 @@ if (!function_exists('logout_user')) {
 if (!function_exists('redirect')) {
     function redirect(string $path): void
     {
-        header('Location: ' . $path);
+        $target = preg_match('/^https?:\/\//i', $path) === 1 ? $path : app_url($path);
+        header('Location: ' . $target);
         exit;
     }
 }
@@ -237,6 +238,3 @@ if (!function_exists('extract_api_error_message')) {
         return 'Login failed. Please try again.';
     }
 }
-
-
-

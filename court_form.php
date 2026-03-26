@@ -34,6 +34,7 @@ function court_form_json_response(array $payload, int $statusCode = 200): void
 function court_form_api_candidates(string $action): array
 {
     return match ($action) {
+        'me' => ['api/auth/me'],
         'courts' => ['api/courts'],
         'players' => ['api/users/booking-options'],
         'bookings' => ['api/bookings'],
@@ -127,17 +128,42 @@ function court_form_normalize_player(array $player): array
 
 function court_form_create_player_summary(array $user): ?array
 {
-    if (!isset($user['id']) || $user['id'] === '' || $user['id'] === null) {
-        return null;
-    }
-
     $normalized = court_form_normalize_player($user);
 
     if ($normalized['name'] === '' || $normalized['name'] === 'User') {
         $normalized['name'] = auth_user_name();
     }
 
+    if ($normalized['cm_no'] === '') {
+        $normalized['cm_no'] = (string) ($user['cm_no'] ?? $user['cmNo'] ?? '');
+    }
+
+    if ($normalized['id'] === null || $normalized['id'] === '') {
+        $normalized['id'] = '__self__';
+    }
+
+    if ($normalized['name'] === '') {
+        return null;
+    }
+
     return $normalized;
+}
+
+function court_form_extract_user(array $responseData): array
+{
+    $candidates = [
+        $responseData['user'] ?? null,
+        $responseData['data']['user'] ?? null,
+        $responseData['data'] ?? null,
+    ];
+
+    foreach ($candidates as $candidate) {
+        if (is_array($candidate)) {
+            return $candidate;
+        }
+    }
+
+    return [];
 }
 
 $token = auth_token();
@@ -152,7 +178,18 @@ if (isset($_GET['ajax'])) {
     $action = (string) $_GET['ajax'];
 
     if ($action === 'bootstrap') {
+        $meResponse = court_form_api_request_first_success('GET', court_form_api_candidates('me'), [], $token);
         $courtsResponse = court_form_api_request_first_success('GET', court_form_api_candidates('courts'), [], $token);
+
+        if ($meResponse['success']) {
+            $liveUser = court_form_extract_user(is_array($meResponse['data']) ? $meResponse['data'] : []);
+
+            if ($liveUser !== []) {
+                $_SESSION['auth']['user'] = array_merge($sessionUser, $liveUser);
+                $sessionUser = $_SESSION['auth']['user'];
+                $currentUserSummary = court_form_create_player_summary($sessionUser);
+            }
+        }
 
         if (!$courtsResponse['success']) {
             court_form_json_response([
@@ -308,7 +345,7 @@ body.page-court-form .field:focus { outline:none; border-color:#0d6efd; box-shad
 body.page-court-form .btn { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:36px; padding:0 13px; border-radius:6px; border:1px solid transparent; text-decoration:none; font-size:12px; font-weight:600; cursor:pointer; }
 body.page-court-form .btn-primary { background:#0d6efd; border-color:#0d6efd; color:#fff; }
 body.page-court-form .btn-secondary { background:#eef3f8; border-color:#d4dde7; color:#304255; }
-body.page-court-form .btn-dark { background:#1f6f5f; border-color:#1f6f5f; color:#fff; }
+body.page-court-form .btn-dark { background:#212529; border-color:#212529; color:#fff; }
 body.page-court-form .btn-history { background:#2563eb; border-color:#2563eb; color:#ffffff; }
 body.page-court-form .btn-add { background:#198754; border-color:#198754; color:#ffffff; }
 body.page-court-form .btn-remove { background:#dc3545; border-color:#dc3545; color:#ffffff; }
@@ -320,9 +357,9 @@ body.page-court-form .court-item:hover { border-color:#9bbdf4; box-shadow:0 6px 
 body.page-court-form .court-item.active { border-color:#0d6efd; background:#eef5ff; box-shadow:0 6px 18px rgba(13,110,253,.1); }
 body.page-court-form .court-item-title { font-size:13px; font-weight:600; color:#212529; }
 body.page-court-form .court-item-wrap { display:flex; align-items:center; gap:10px; }
-body.page-court-form .court-thumb { width:58px; height:58px; border-radius:6px; object-fit:cover; background:#e9ecef; border:1px solid #dee2e6; flex-shrink:0; }
-body.page-court-form .court-field-row { display:grid; grid-template-columns:90px 1fr; gap:14px; align-items:center; }
-body.page-court-form .court-preview { width:90px; height:90px; border-radius:10px; object-fit:cover; background:#e9ecef; border:1px solid #dee2e6; }
+body.page-court-form .court-thumb { width:46px; height:46px; border-radius:6px; object-fit:cover; background:#e9ecef; border:1px solid #dee2e6; flex-shrink:0; cursor:pointer; }
+body.page-court-form .court-field-row { display:grid; grid-template-columns:58px 1fr; gap:14px; align-items:center; }
+body.page-court-form .court-preview { width:46px; height:46px; border-radius:6px; object-fit:cover; background:#e9ecef; border:1px solid #dee2e6; cursor:pointer; }
 body.page-court-form .booking-top-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:14px; align-items:start; }
 body.page-court-form .field-card { border:1px solid #e5ebf2; border-radius:10px; padding:12px; background:linear-gradient(180deg,#ffffff 0%, #f9fbfd 100%); }
 body.page-court-form .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
@@ -336,8 +373,8 @@ body.page-court-form .helper { margin-top:6px; font-size:11px; color:#6c757d; }
 body.page-court-form .selection { border:1px solid #dce5ec; border-radius:10px; padding:14px; background:linear-gradient(180deg,#f8fbff 0%, #f3f8f7 100%); }
 body.page-court-form .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; padding:18px; }
 body.page-court-form .modal-backdrop.show { display:flex; }
-body.page-court-form .modal-card { width:100%; max-width:420px; max-height:70vh; overflow:auto; background:#fff; border-radius:8px; border:1px solid #dee2e6; padding:16px; }
-body.page-court-form .player-option { width:100%; text-align:left; margin-bottom:8px; border:1px solid #dee2e6; background:#fff; border-radius:6px; padding:10px; cursor:pointer; }
+body.page-court-form .modal-card { width:100%; max-width:360px; max-height:58vh; overflow:auto; background:#fff; border-radius:8px; border:1px solid #dee2e6; padding:12px; }
+body.page-court-form .player-option { width:100%; text-align:left; margin-bottom:6px; border:1px solid #dee2e6; background:#fff; border-radius:6px; padding:8px; cursor:pointer; }
 body.page-court-form .player-option:last-child { margin-bottom:0; }
 body.page-court-form .notice-backdrop { position:fixed; inset:0; background:rgba(15,23,42,.4); display:none; align-items:center; justify-content:center; padding:18px; z-index:1200; }
 body.page-court-form .notice-backdrop.show { display:flex; }
@@ -348,6 +385,15 @@ body.page-court-form .notice-message { margin:0; font-size:13px; line-height:1.6
 body.page-court-form .search-wrap { position:relative; margin-top:10px; }
 body.page-court-form .search-wrap .field { padding-left:36px; }
 body.page-court-form .search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:#7a8695; font-size:13px; pointer-events:none; }
+body.page-court-form .image-viewer-backdrop { position:fixed; inset:0; background:rgba(8,15,28,.92); display:none; align-items:center; justify-content:center; padding:24px; z-index:1250; backdrop-filter:blur(6px); }
+body.page-court-form .image-viewer-backdrop.show { display:flex; }
+body.page-court-form .image-viewer-card { width:100%; height:100%; display:flex; flex-direction:column; }
+body.page-court-form .image-viewer-top { display:flex; justify-content:space-between; align-items:center; padding:10px 14px 18px; }
+body.page-court-form .image-viewer-title { font-size:14px; font-weight:600; color:#f8fbff; letter-spacing:.2px; }
+body.page-court-form .image-viewer-close { width:44px; height:44px; border-radius:999px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.08); color:#ffffff; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; transition:background .2s ease, transform .2s ease; }
+body.page-court-form .image-viewer-close:hover { background:rgba(255,255,255,.16); transform:scale(1.04); }
+body.page-court-form .image-viewer-frame { flex:1; min-height:0; display:flex; align-items:center; justify-content:center; padding:0 14px 20px; }
+body.page-court-form .image-viewer-img { max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; border-radius:14px; box-shadow:0 20px 60px rgba(0,0,0,.45); }
 @media (max-width: 900px) { body.page-court-form .layout, body.page-court-form .grid-2, body.page-court-form .booking-top-grid { grid-template-columns:1fr; } body.page-court-form .court-shell { padding:12px; } body.page-court-form .court-field-row { grid-template-columns:1fr; } }
 </style>
 </head>
@@ -370,7 +416,6 @@ body.page-court-form .search-icon { position:absolute; left:12px; top:50%; trans
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
                 <input id="courtSearch" class="field" type="text" placeholder="Search court">
             </div>
-            <div class="helper">Select one court to create booking.</div>
             <div id="courtList" class="court-list" style="margin-top:12px;"></div>
         </div>
 
@@ -397,6 +442,19 @@ body.page-court-form .search-icon { position:absolute; left:12px; top:50%; trans
         <p id="noticeMessage" class="notice-message"></p>
         <div style="margin-top:16px;">
             <button type="button" id="closeNoticeModal" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+</div>
+<div id="imageViewerModal" class="image-viewer-backdrop">
+    <div class="image-viewer-card">
+        <div class="image-viewer-top">
+            <div id="imageViewerTitle" class="image-viewer-title">Court Preview</div>
+            <button type="button" id="closeImageViewerModal" class="image-viewer-close" aria-label="Close image viewer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="image-viewer-frame">
+            <img id="imageViewerImg" class="image-viewer-img" src="" alt="Court image preview">
         </div>
     </div>
 </div>
@@ -434,6 +492,10 @@ const el = {
   noticeTitle: document.getElementById('noticeTitle'),
   noticeMessage: document.getElementById('noticeMessage'),
   closeNoticeModal: document.getElementById('closeNoticeModal'),
+  imageViewerModal: document.getElementById('imageViewerModal'),
+  imageViewerImg: document.getElementById('imageViewerImg'),
+  imageViewerTitle: document.getElementById('imageViewerTitle'),
+  closeImageViewerModal: document.getElementById('closeImageViewerModal'),
 };
 
 function startOfDay(value) { const d = new Date(value); d.setHours(0,0,0,0); return d; }
@@ -448,12 +510,22 @@ function timeLabel(minutes) { const h24 = Math.floor(minutes/60); const m = minu
 function timeValue(minutes) { return `${String(Math.floor(minutes/60)).padStart(2,'0')}:${String(minutes%60).padStart(2,'0')}:00`; }
 function overlaps(a1, a2, b1, b2) { return a1 < b2 && a2 > b1; }
 function escapeHtml(value) { return String(value ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
-function createPlayerSummary(user) { return user?.id && user?.name ? { id:user.id, name:user.name, cm_no:user.cm_no || '', fees_status:user.fees_status || 'paid' } : null; }
+function createPlayerSummary(user) {
+  if (!user) return null;
+  const name = user.name || user.username || 'User';
+  if (!name) return null;
+  return {
+    id: user.id ?? '__self__',
+    name,
+    cm_no: user.cm_no || '',
+    fees_status: user.fees_status || 'paid'
+  };
+}
 function formatPlayerLine(player) { return `${player?.name || 'User'}${player?.cm_no ? ` • CM: ${player.cm_no}` : ''}`; }
 function getFallbackCurrentUser() {
   const user = state.currentUser || {};
   return {
-    id: user.id ?? null,
+    id: user.id ?? '__self__',
     name: user.name || user.username || 'User',
     cm_no: user.cm_no || '',
     fees_status: user.fees_status || 'paid'
@@ -501,6 +573,18 @@ function clearAlert() {
   el.noticeModal.classList.remove('show');
 }
 
+function openImageViewer(src, altText = 'Court image') {
+  el.imageViewerImg.src = src;
+  el.imageViewerImg.alt = altText;
+  el.imageViewerTitle.textContent = altText || 'Court Preview';
+  el.imageViewerModal.classList.add('show');
+}
+
+function closeImageViewer() {
+  el.imageViewerModal.classList.remove('show');
+  el.imageViewerImg.src = '';
+}
+
 function getFilteredCourts() {
   const q = state.courtSearch.trim().toLowerCase();
   return q ? state.courts.filter(c => String(c.name || '').toLowerCase().includes(q)) : state.courts;
@@ -545,7 +629,7 @@ function renderCourtList() {
   el.courtList.innerHTML = courts.map((court) => `
     <button type="button" class="court-item ${state.selectedCourt && String(state.selectedCourt.id) === String(court.id) ? 'active' : ''}" data-court-id="${escapeHtml(court.id)}">
       <div class="court-item-wrap">
-        <img class="court-thumb" src="${escapeHtml(getCourtImageUrl(court))}" alt="${escapeHtml(court.name || 'Court')}" onerror="this.onerror=null;this.src='assets/images/icon.png';">
+        <img class="court-thumb" data-preview-image="${escapeHtml(getCourtImageUrl(court))}" data-preview-alt="${escapeHtml(court.name || 'Court')}" src="${escapeHtml(getCourtImageUrl(court))}" alt="${escapeHtml(court.name || 'Court')}" onerror="this.onerror=null;this.src='assets/images/icon.png';">
         <div class="court-item-title">${escapeHtml(court.name || 'Court')}</div>
       </div>
     </button>
@@ -567,6 +651,14 @@ function renderCourtList() {
       await loadBookings();
     });
   });
+
+  el.courtList.querySelectorAll('[data-preview-image]').forEach((image) => {
+    image.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      openImageViewer(image.getAttribute('data-preview-image'), image.getAttribute('data-preview-alt') || 'Court image');
+    });
+  });
 }
 
 function renderBookingForm() {
@@ -584,14 +676,13 @@ function renderBookingForm() {
       <div class="field-card">
         <h3>Court</h3>
         <div class="court-field-row">
-          <img class="court-preview" src="${escapeHtml(getCourtImageUrl(state.selectedCourt))}" alt="${escapeHtml(state.selectedCourt.name || 'Court')}" onerror="this.onerror=null;this.src='assets/images/icon.png';">
+          <img class="court-preview" id="selectedCourtPreview" src="${escapeHtml(getCourtImageUrl(state.selectedCourt))}" alt="${escapeHtml(state.selectedCourt.name || 'Court')}" onerror="this.onerror=null;this.src='assets/images/icon.png';">
           <input class="field" type="text" value="${escapeHtml(state.selectedCourt.name || '')}" disabled>
         </div>
       </div>
       <div class="field-card">
         <h3>Date</h3>
         <input id="bookingDateInput" class="field" type="date" min="${escapeHtml(minDate)}" value="${escapeHtml(formatDateKey(state.selectedDate))}">
-        <div class="helper">Choose booking date from calendar.</div>
       </div>
     </div>
 
@@ -615,7 +706,7 @@ function renderBookingForm() {
         ${state.selectedPlayers.map((player, index) => `
           <div class="player-row">
             <span>${index + 1}. ${escapeHtml(formatPlayerLine(player))}</span>
-            ${String(player.id) === String(state.currentUser?.id)
+            ${index === 0
               ? '<span class="muted">You</span>'
               : `<button type="button" class="btn btn-remove" data-remove-player="${escapeHtml(player.id)}">Remove</button>`}
           </div>
@@ -666,14 +757,19 @@ function renderBookingForm() {
   document.querySelectorAll('[data-remove-player]').forEach((button) => {
     button.addEventListener('click', () => {
       const playerId = button.getAttribute('data-remove-player');
-      if (String(playerId) === String(state.currentUser?.id)) return;
       state.selectedPlayers = state.selectedPlayers.filter((player) => String(player.id) !== String(playerId));
+      if (!state.selectedPlayers.length) {
+        resetPlayersToSelf();
+      }
       renderBookingForm();
     });
   });
 
   document.getElementById('openPlayerModal').addEventListener('click', openPlayerModal);
   document.getElementById('bookNow').addEventListener('click', handleBookNow);
+  document.getElementById('selectedCourtPreview').addEventListener('click', () => {
+    openImageViewer(getCourtImageUrl(state.selectedCourt), state.selectedCourt?.name || 'Court image');
+  });
 }
 
 function renderPlayerOptions() {
@@ -694,7 +790,7 @@ function renderPlayerOptions() {
     button.addEventListener('click', () => {
       const player = state.players.find((item) => String(item.id) === String(button.getAttribute('data-player-id')));
       if (!player) return;
-      if (String(player.id) === String(state.currentUser?.id)) return;
+      if (String(player.id) === String(state.currentUser?.id) || String(player.id) === String(state.selectedPlayers[0]?.id)) return;
       if (String(player.fees_status || 'paid').toLowerCase() === 'defaulter') {
         showAlert('This user is defaulter. Select other user.', 'error', `${player.name} Cannot Be Added`);
         return;
@@ -837,6 +933,10 @@ el.playerModal.addEventListener('click', (event) => {
 el.closeNoticeModal.addEventListener('click', clearAlert);
 el.noticeModal.addEventListener('click', (event) => {
   if (event.target === el.noticeModal) clearAlert();
+});
+el.closeImageViewerModal.addEventListener('click', closeImageViewer);
+el.imageViewerModal.addEventListener('click', (event) => {
+  if (event.target === el.imageViewerModal) closeImageViewer();
 });
 
 loadBootstrap();

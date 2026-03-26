@@ -35,7 +35,7 @@ $websiteLogoutRedirect = urlencode((string) $websiteCurrentPath);
                 </li>
                 <?php if (is_logged_in()): ?>
                     <li class="nav-item ms-lg-2">
-                        <a href="<?php echo htmlspecialchars(app_url('dashboard'), ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-primary login-btn" style="background: #000046 !important; background: -webkit-linear-gradient(to right, #1CB5E0, #000046) !important; background: linear-gradient(to right, #1CB5E0, #000046) !important; border-color: transparent !important; color: #ffffff !important;">Dashboard</a>
+                        <a href="<?php echo htmlspecialchars(app_url('dashboard'), ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-primary login-btn" style="background: #000000 !important; background: -webkit-linear-gradient(to right, #434343, #000000) !important; background: linear-gradient(to right, #434343, #000000) !important; border-color: transparent !important; color: #ffffff !important;">Dashboard</a>
                     </li>
                     <li class="nav-item ms-lg-2">
                         <a href="<?php echo htmlspecialchars(app_url('logout?redirect=' . $websiteLogoutRedirect), ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-primary login-btn" style="background-color: #6c757d !important; border-color: #6c757d !important; color: #ffffff !important;">Logout</a>

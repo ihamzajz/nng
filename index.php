@@ -28,7 +28,7 @@
 </head>
 
 
-<body class="page-index">
+<body id="top" class="page-index">
     <!-- LOADING PAGE - FULLY RESPONSIVE -->
     <div id="loading-page">
         <img src="assets/images/NNG.png" alt="NN Gymkhana" class="loading-logo">
@@ -41,40 +41,10 @@
 
     <div class="main-content">
         <!-- Back to Top -->
-        <a href="#" class="back-to-top" id="backToTop"><i class="bi bi-arrow-up"></i></a>
+        <a href="#top" class="back-to-top" id="backToTop"><i class="bi bi-arrow-up"></i></a>
 
         <!-- NAVBAR - FULLY RESPONSIVE WITH BOOTSTRAP -->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-            <div class="container">
-                <a class="navbar-brand" href="./">
-                    <img src="assets/images/NNG.png" alt="North Nazimabad Gymkhana" class="img-fluid">
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="facilllities">Facilities</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="feedback">Feedback</a>
-                        </li>
-                        <li class="nav-item ms-lg-2">
-                            <a href="membership" class="btn btn-primary">Membership</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <?php include __DIR__ . '/navbar.php'; ?>
 
         <!-- HERO SECTION - FULLY RESPONSIVE -->
         <section class="hero-section position-relative">
@@ -366,7 +336,7 @@
                         <div class="social-icons">
                             <a href="https://www.facebook.com/NorthNazimabadGymkhana" target="_blank"><i
                                     class="bi bi-facebook"></i></a>
-                            <a href="#"><i class="bi bi-instagram"></i></a>
+                            <a href="https://www.facebook.com/NorthNazimabadGymkhana" target="_blank"><i class="bi bi-instagram"></i></a>
 
                             <a href="https://www.youtube.com/@NNG_SPORTS_CLUB-tn6ew" target="_blank"><i
                                     class="bi bi-youtube"></i></a>

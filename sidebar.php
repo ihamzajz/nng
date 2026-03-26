@@ -290,8 +290,8 @@ display:none;
 </button>
 
 <div class="submenu">
-<a class="submenu-item" href="#">Court</a>
-<a class="submenu-item" href="#">Event</a>
+<a class="submenu-item" href="court_form">Court</a>
+<a class="submenu-item" href="event_form">Event</a>
 </div>
 
 <button class="nav-item">
@@ -301,11 +301,11 @@ display:none;
 </button>
 
 <div class="submenu">
-<a class="submenu-item" href="#">Court</a>
-<a class="submenu-item" href="#">Event</a>
+<a class="submenu-item" href="court_history">Court</a>
+<a class="submenu-item" href="event_history">Event</a>
 </div>
 
-<a class="nav-item" href="#">
+<a class="nav-item" href="admin_panel">
 <span class="nav-icon"><i class="fa-solid fa-user-gear"></i></span>
 <span class="nav-text">Admin Panel</span>
 </a>
@@ -324,7 +324,7 @@ display:none;
 
 </div>
 
-<a class="nav-item" href="#">
+<a class="nav-item" href="profile">
 <span class="nav-icon"><i class="fa-solid fa-user"></i></span>
 <span class="nav-text">Profile</span>
 </a>

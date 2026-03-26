@@ -131,7 +131,13 @@ function court_form_create_player_summary(array $user): ?array
         return null;
     }
 
-    return court_form_normalize_player($user);
+    $normalized = court_form_normalize_player($user);
+
+    if ($normalized['name'] === '' || $normalized['name'] === 'User') {
+        $normalized['name'] = auth_user_name();
+    }
+
+    return $normalized;
 }
 
 $token = auth_token();
@@ -289,7 +295,7 @@ if (isset($_GET['ajax'])) {
 <style>
 body.page-court-form { font-family:'Poppins',sans-serif; background:#e9ecef; color:#212529; }
 body.page-court-form .court-shell { padding:18px; max-width:1120px; }
-body.page-court-form .court-box { background:#fff; border:1px solid #dee2e6; border-radius:8px; padding:16px; margin-bottom:14px; }
+body.page-court-form .court-box { background:#fff; border:1px solid #d8dee6; border-radius:10px; padding:16px; margin-bottom:14px; box-shadow:0 8px 24px rgba(15,23,42,.05); }
 body.page-court-form h1 { margin:0 0 4px; font-size:22px; font-weight:700; }
 body.page-court-form h2 { margin:0 0 10px; font-size:18px; font-weight:600; }
 body.page-court-form h3 { margin:0 0 8px; font-size:14px; font-weight:600; color:#495057; }
@@ -297,38 +303,52 @@ body.page-court-form .muted { color:#6c757d; font-size:12.5px; }
 body.page-court-form .top-actions { display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap; }
 body.page-court-form .layout { display:grid; grid-template-columns:320px 1fr; gap:14px; }
 body.page-court-form .field, body.page-court-form input, body.page-court-form select, body.page-court-form button { font-family:'Poppins',sans-serif; }
-body.page-court-form .field { width:100%; min-height:38px; border:1px solid #ced4da; border-radius:6px; padding:8px 10px; font-size:13px; background:#fff; }
+body.page-court-form .field { width:100%; min-height:40px; border:1px solid #cfd6df; border-radius:8px; padding:8px 12px; font-size:13px; background:#fff; transition:border-color .2s ease, box-shadow .2s ease; box-sizing:border-box; }
+body.page-court-form .field:focus { outline:none; border-color:#0d6efd; box-shadow:0 0 0 3px rgba(13,110,253,.12); }
 body.page-court-form .btn { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:36px; padding:0 13px; border-radius:6px; border:1px solid transparent; text-decoration:none; font-size:12px; font-weight:600; cursor:pointer; }
 body.page-court-form .btn-primary { background:#0d6efd; border-color:#0d6efd; color:#fff; }
-body.page-court-form .btn-secondary { background:#6c757d; border-color:#6c757d; color:#fff; }
-body.page-court-form .btn-dark { background:#212529; border-color:#212529; color:#fff; }
+body.page-court-form .btn-secondary { background:#eef3f8; border-color:#d4dde7; color:#304255; }
+body.page-court-form .btn-dark { background:#1f6f5f; border-color:#1f6f5f; color:#fff; }
+body.page-court-form .btn-history { background:#2563eb; border-color:#2563eb; color:#ffffff; }
+body.page-court-form .btn-add { background:#198754; border-color:#198754; color:#ffffff; }
+body.page-court-form .btn-remove { background:#dc3545; border-color:#dc3545; color:#ffffff; }
+body.page-court-form .btn-close-soft { background:#f59f00; border-color:#f59f00; color:#ffffff; }
 body.page-court-form .btn:disabled { opacity:.65; cursor:not-allowed; }
-body.page-court-form .alert-box { padding:10px 12px; border-radius:6px; margin-bottom:12px; font-size:12px; }
-body.page-court-form .alert-error { background:#f8d7da; color:#842029; border:1px solid #f5c2c7; }
-body.page-court-form .alert-success { background:#d1e7dd; color:#0f5132; border:1px solid #badbcc; }
 body.page-court-form .court-list { display:flex; flex-direction:column; gap:8px; max-height:620px; overflow:auto; }
-body.page-court-form .court-item { width:100%; text-align:left; border:1px solid #dee2e6; background:#fff; border-radius:6px; padding:10px; cursor:pointer; }
-body.page-court-form .court-item.active { border-color:#0d6efd; background:#eef5ff; }
+body.page-court-form .court-item { width:100%; text-align:left; border:1px solid #dde4ec; background:#fff; border-radius:8px; padding:10px; cursor:pointer; transition:border-color .2s ease, box-shadow .2s ease, background .2s ease; }
+body.page-court-form .court-item:hover { border-color:#9bbdf4; box-shadow:0 6px 18px rgba(13,110,253,.08); }
+body.page-court-form .court-item.active { border-color:#0d6efd; background:#eef5ff; box-shadow:0 6px 18px rgba(13,110,253,.1); }
 body.page-court-form .court-item-title { font-size:13px; font-weight:600; color:#212529; }
 body.page-court-form .court-item-wrap { display:flex; align-items:center; gap:10px; }
 body.page-court-form .court-thumb { width:58px; height:58px; border-radius:6px; object-fit:cover; background:#e9ecef; border:1px solid #dee2e6; flex-shrink:0; }
-body.page-court-form .court-field-row { display:grid; grid-template-columns:86px 1fr; gap:12px; align-items:start; }
-body.page-court-form .court-preview { width:86px; height:86px; border-radius:8px; object-fit:cover; background:#e9ecef; border:1px solid #dee2e6; }
+body.page-court-form .court-field-row { display:grid; grid-template-columns:90px 1fr; gap:14px; align-items:center; }
+body.page-court-form .court-preview { width:90px; height:90px; border-radius:10px; object-fit:cover; background:#e9ecef; border:1px solid #dee2e6; }
+body.page-court-form .booking-top-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:14px; align-items:start; }
+body.page-court-form .field-card { border:1px solid #e5ebf2; border-radius:10px; padding:12px; background:linear-gradient(180deg,#ffffff 0%, #f9fbfd 100%); }
 body.page-court-form .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 body.page-court-form .chip-grid { display:flex; flex-wrap:wrap; gap:8px; }
-body.page-court-form .chip { border:1px solid #ced4da; background:#fff; color:#212529; border-radius:5px; padding:5px 8px; font-size:11px; line-height:1.2; cursor:pointer; min-height:30px; }
-body.page-court-form .chip.active { background:#212529; border-color:#212529; color:#fff; }
-body.page-court-form .chip.disabled { background:#e9ecef; color:#6c757d; cursor:not-allowed; }
+body.page-court-form .chip { border:1px solid #d7dee7; background:#fff; color:#314355; border-radius:999px; padding:5px 8px; font-size:11px; line-height:1.2; cursor:pointer; min-height:30px; }
+body.page-court-form .chip.active { background:#284b63; border-color:#284b63; color:#fff; }
+body.page-court-form .chip.disabled { background:#edf1f5; color:#8a94a2; cursor:not-allowed; }
 body.page-court-form .players-list { display:flex; flex-direction:column; gap:8px; }
-body.page-court-form .player-row { display:flex; justify-content:space-between; align-items:center; gap:8px; border:1px solid #e9ecef; border-radius:6px; padding:8px 10px; font-size:12px; }
+body.page-court-form .player-row { display:flex; justify-content:space-between; align-items:center; gap:8px; border:1px solid #e3e9ef; border-radius:8px; padding:8px 10px; font-size:12px; background:#fcfdff; }
 body.page-court-form .helper { margin-top:6px; font-size:11px; color:#6c757d; }
-body.page-court-form .selection { border:1px solid #e9ecef; border-radius:6px; padding:12px; background:#f8f9fa; }
+body.page-court-form .selection { border:1px solid #dce5ec; border-radius:10px; padding:14px; background:linear-gradient(180deg,#f8fbff 0%, #f3f8f7 100%); }
 body.page-court-form .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; padding:18px; }
 body.page-court-form .modal-backdrop.show { display:flex; }
 body.page-court-form .modal-card { width:100%; max-width:420px; max-height:70vh; overflow:auto; background:#fff; border-radius:8px; border:1px solid #dee2e6; padding:16px; }
 body.page-court-form .player-option { width:100%; text-align:left; margin-bottom:8px; border:1px solid #dee2e6; background:#fff; border-radius:6px; padding:10px; cursor:pointer; }
 body.page-court-form .player-option:last-child { margin-bottom:0; }
-@media (max-width: 900px) { body.page-court-form .layout, body.page-court-form .grid-2 { grid-template-columns:1fr; } body.page-court-form .court-shell { padding:12px; } }
+body.page-court-form .notice-backdrop { position:fixed; inset:0; background:rgba(15,23,42,.4); display:none; align-items:center; justify-content:center; padding:18px; z-index:1200; }
+body.page-court-form .notice-backdrop.show { display:flex; }
+body.page-court-form .notice-card { width:100%; max-width:340px; background:#fff; border:1px solid #dfe7ef; border-radius:12px; padding:20px; box-shadow:0 20px 44px rgba(15,23,42,.18); text-align:center; }
+body.page-court-form .notice-icon { width:54px; height:54px; border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; background:#eef3f8; font-size:22px; }
+body.page-court-form .notice-title { margin:0 0 8px; font-size:16px; font-weight:700; }
+body.page-court-form .notice-message { margin:0; font-size:13px; line-height:1.6; color:#667085; }
+body.page-court-form .search-wrap { position:relative; margin-top:10px; }
+body.page-court-form .search-wrap .field { padding-left:36px; }
+body.page-court-form .search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:#7a8695; font-size:13px; pointer-events:none; }
+@media (max-width: 900px) { body.page-court-form .layout, body.page-court-form .grid-2, body.page-court-form .booking-top-grid { grid-template-columns:1fr; } body.page-court-form .court-shell { padding:12px; } body.page-court-form .court-field-row { grid-template-columns:1fr; } }
 </style>
 </head>
 <body class="page-court-form">
@@ -338,18 +358,18 @@ body.page-court-form .player-option:last-child { margin-bottom:0; }
         <div class="top-actions">
             <div>
                 <h1>Court Booking</h1>
-                <p class="muted">Simple web layout with the same booking logic as your mobile app.</p>
             </div>
-            <a href="court_history" class="btn btn-secondary"><i class="fa-solid fa-clock-rotate-left"></i><span>View History</span></a>
+            <a href="court_history" class="btn btn-history"><i class="fa-solid fa-clock-rotate-left"></i><span>View History</span></a>
         </div>
     </div>
-
-    <div id="pageAlert"></div>
 
     <div class="layout">
         <div class="court-box">
             <h2>Courts</h2>
-            <input id="courtSearch" class="field" type="text" placeholder="Search court">
+            <div class="search-wrap">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input id="courtSearch" class="field" type="text" placeholder="Search court">
+            </div>
             <div class="helper">Select one court to create booking.</div>
             <div id="courtList" class="court-list" style="margin-top:12px;"></div>
         </div>
@@ -364,10 +384,20 @@ body.page-court-form .player-option:last-child { margin-bottom:0; }
     <div class="modal-card">
         <div class="top-actions" style="margin-bottom:12px;">
             <h2 style="margin:0;">Add Players</h2>
-            <button type="button" id="closePlayerModal" class="btn btn-secondary">Close</button>
+            <button type="button" id="closePlayerModal" class="btn btn-close-soft">Close</button>
         </div>
         <input id="playerSearch" class="field" type="text" placeholder="Search users">
         <div id="playerOptions" style="margin-top:12px;"></div>
+    </div>
+</div>
+<div id="noticeModal" class="notice-backdrop">
+    <div class="notice-card">
+        <div id="noticeIcon" class="notice-icon"></div>
+        <h3 id="noticeTitle" class="notice-title"></h3>
+        <p id="noticeMessage" class="notice-message"></p>
+        <div style="margin-top:16px;">
+            <button type="button" id="closeNoticeModal" class="btn btn-primary">OK</button>
+        </div>
     </div>
 </div>
 <script>
@@ -392,7 +422,6 @@ const state = {
 };
 
 const el = {
-  pageAlert: document.getElementById('pageAlert'),
   courtSearch: document.getElementById('courtSearch'),
   courtList: document.getElementById('courtList'),
   bookingContent: document.getElementById('bookingContent'),
@@ -400,6 +429,11 @@ const el = {
   closePlayerModal: document.getElementById('closePlayerModal'),
   playerSearch: document.getElementById('playerSearch'),
   playerOptions: document.getElementById('playerOptions'),
+  noticeModal: document.getElementById('noticeModal'),
+  noticeIcon: document.getElementById('noticeIcon'),
+  noticeTitle: document.getElementById('noticeTitle'),
+  noticeMessage: document.getElementById('noticeMessage'),
+  closeNoticeModal: document.getElementById('closeNoticeModal'),
 };
 
 function startOfDay(value) { const d = new Date(value); d.setHours(0,0,0,0); return d; }
@@ -416,7 +450,20 @@ function overlaps(a1, a2, b1, b2) { return a1 < b2 && a2 > b1; }
 function escapeHtml(value) { return String(value ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
 function createPlayerSummary(user) { return user?.id && user?.name ? { id:user.id, name:user.name, cm_no:user.cm_no || '', fees_status:user.fees_status || 'paid' } : null; }
 function formatPlayerLine(player) { return `${player?.name || 'User'}${player?.cm_no ? ` • CM: ${player.cm_no}` : ''}`; }
-function resetPlayersToSelf() { const me = createPlayerSummary(state.currentUser); state.selectedPlayers = me ? [me] : []; }
+function getFallbackCurrentUser() {
+  const user = state.currentUser || {};
+  return {
+    id: user.id ?? null,
+    name: user.name || user.username || 'User',
+    cm_no: user.cm_no || '',
+    fees_status: user.fees_status || 'paid'
+  };
+}
+function resetPlayersToSelf() {
+  const fallbackUser = getFallbackCurrentUser();
+  const me = createPlayerSummary(fallbackUser);
+  state.selectedPlayers = me ? [me] : [];
+}
 function getCourtImageUrl(court) { return court?.picture ? `${state.apiBase}/uploads/courts/${String(court.picture).replace(/^\/+/, '')}` : 'assets/images/icon.png'; }
 
 async function requestJson(url, options = {}) {
@@ -440,12 +487,18 @@ async function requestJson(url, options = {}) {
   return data;
 }
 
-function showAlert(message, type = 'error') {
-  el.pageAlert.innerHTML = `<div class="alert-box ${type === 'success' ? 'alert-success' : 'alert-error'}">${escapeHtml(message)}</div>`;
+function showAlert(message, type = 'error', title = '') {
+  const success = type === 'success';
+  el.noticeIcon.innerHTML = success
+    ? '<i class="fa-solid fa-circle-check" style="color:#198754;"></i>'
+    : '<i class="fa-solid fa-circle-exclamation" style="color:#d64d4d;"></i>';
+  el.noticeTitle.textContent = title || (success ? 'Success' : 'Notice');
+  el.noticeMessage.textContent = message;
+  el.noticeModal.classList.add('show');
 }
 
 function clearAlert() {
-  el.pageAlert.innerHTML = '';
+  el.noticeModal.classList.remove('show');
 }
 
 function getFilteredCourts() {
@@ -527,35 +580,36 @@ function renderBookingForm() {
   const minDate = formatDateKey(new Date());
 
   el.bookingContent.innerHTML = `
-    <div class="grid-2">
-      <div>
+    <div class="booking-top-grid">
+      <div class="field-card">
         <h3>Court</h3>
         <div class="court-field-row">
           <img class="court-preview" src="${escapeHtml(getCourtImageUrl(state.selectedCourt))}" alt="${escapeHtml(state.selectedCourt.name || 'Court')}" onerror="this.onerror=null;this.src='assets/images/icon.png';">
           <input class="field" type="text" value="${escapeHtml(state.selectedCourt.name || '')}" disabled>
         </div>
       </div>
-      <div>
+      <div class="field-card">
         <h3>Date</h3>
         <input id="bookingDateInput" class="field" type="date" min="${escapeHtml(minDate)}" value="${escapeHtml(formatDateKey(state.selectedDate))}">
+        <div class="helper">Choose booking date from calendar.</div>
       </div>
     </div>
 
-    <div style="margin-top:14px;">
+    <div class="field-card" style="margin-top:14px;">
       <h3>Duration</h3>
       <div class="chip-grid">
         ${DURATIONS.map((duration) => `<button type="button" class="chip ${duration === state.selectedDuration ? 'active' : ''}" data-duration="${duration}">${duration} min</button>`).join('')}
       </div>
     </div>
 
-    <div style="margin-top:14px;">
+    <div class="field-card" style="margin-top:14px;">
       <h3>Slots</h3>
       <div class="chip-grid">
         ${slotItems.map((slot) => `<button type="button" class="chip ${state.selectedSlot?.key === slot.key ? 'active' : ''} ${slot.available ? '' : 'disabled'}" data-slot="${slot.key}" ${slot.available ? '' : 'disabled'}>${escapeHtml(slot.label)}</button>`).join('')}
       </div>
     </div>
 
-    <div style="margin-top:14px;">
+    <div class="field-card" style="margin-top:14px;">
       <h3>Players</h3>
       <div class="players-list">
         ${state.selectedPlayers.map((player, index) => `
@@ -563,12 +617,12 @@ function renderBookingForm() {
             <span>${index + 1}. ${escapeHtml(formatPlayerLine(player))}</span>
             ${String(player.id) === String(state.currentUser?.id)
               ? '<span class="muted">You</span>'
-              : `<button type="button" class="btn btn-secondary" data-remove-player="${escapeHtml(player.id)}">Remove</button>`}
+              : `<button type="button" class="btn btn-remove" data-remove-player="${escapeHtml(player.id)}">Remove</button>`}
           </div>
         `).join('')}
       </div>
       <div style="margin-top:10px;">
-        <button type="button" class="btn btn-secondary" id="openPlayerModal" ${state.selectedPlayers.length >= MAX_BOOKING_PLAYERS ? 'disabled' : ''}>Add Player</button>
+        <button type="button" class="btn btn-add" id="openPlayerModal" ${state.selectedPlayers.length >= MAX_BOOKING_PLAYERS ? 'disabled' : ''}>Add Player</button>
         <div class="helper">Maximum 4 players including you. Defaulters are not allowed.</div>
       </div>
     </div>
@@ -642,11 +696,11 @@ function renderPlayerOptions() {
       if (!player) return;
       if (String(player.id) === String(state.currentUser?.id)) return;
       if (String(player.fees_status || 'paid').toLowerCase() === 'defaulter') {
-        showAlert('This user is defaulter. Select other user.');
+        showAlert('This user is defaulter. Select other user.', 'error', `${player.name} Cannot Be Added`);
         return;
       }
       if (state.selectedPlayers.length >= MAX_BOOKING_PLAYERS) {
-        showAlert('Booking can have maximum 4 players including you');
+        showAlert('Booking can have maximum 4 players including you', 'error', 'Limit Reached');
         return;
       }
       state.selectedPlayers = [...state.selectedPlayers, player];
@@ -685,7 +739,7 @@ async function loadPlayersAndOpenModal() {
       return;
     }
     closePlayerModal();
-    showAlert(error.message || 'We could not load players right now.');
+    showAlert(error.message || 'We could not load players right now.', 'error', 'Players Unavailable');
   }
 }
 
@@ -706,7 +760,7 @@ async function loadBootstrap() {
       window.location.href = 'login';
       return;
     }
-    showAlert(error.message || 'Failed to load court form');
+    showAlert(error.message || 'Failed to load court form', 'error', 'Courts Unavailable');
     el.courtList.innerHTML = '<div class="muted">Could not load courts.</div>';
   }
 }
@@ -725,13 +779,13 @@ async function loadBookings() {
     }
     state.bookings = [];
     renderBookingForm();
-    showAlert(error.message || 'Failed to fetch bookings');
+    showAlert(error.message || 'Failed to fetch bookings', 'error', 'Slots Unavailable');
   }
 }
 
 async function handleBookNow() {
   if (!state.selectedCourt || !state.selectedSlot || !state.selectedSlot.available) {
-    showAlert('Please choose an available slot before booking.');
+    showAlert('Please choose an available slot before booking.', 'error', 'Select Slot');
     return;
   }
 
@@ -750,7 +804,7 @@ async function handleBookNow() {
       }),
     });
 
-    showAlert(data.message || 'Booking created successfully.', 'success');
+    showAlert(data.message || 'Booking created successfully.', 'success', 'Booking Created');
     state.selectedSlot = null;
     resetPlayersToSelf();
     await loadBookings();
@@ -759,7 +813,7 @@ async function handleBookNow() {
       window.location.href = 'login';
       return;
     }
-    showAlert(error.message || 'Booking failed');
+    showAlert(error.message || 'Booking failed', 'error', 'Booking Failed');
   } finally {
     state.submitting = false;
     renderBookingForm();
@@ -779,6 +833,10 @@ el.playerSearch.addEventListener('input', (event) => {
 el.closePlayerModal.addEventListener('click', closePlayerModal);
 el.playerModal.addEventListener('click', (event) => {
   if (event.target === el.playerModal) closePlayerModal();
+});
+el.closeNoticeModal.addEventListener('click', clearAlert);
+el.noticeModal.addEventListener('click', (event) => {
+  if (event.target === el.noticeModal) clearAlert();
 });
 
 loadBootstrap();

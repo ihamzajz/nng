@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/bootstrap.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,15 +18,15 @@
 
 <!-- AOS (Animate on Scroll) -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<link rel="icon" type="image/png" href="assets/images/icon.png">
+<link rel="icon" type="image/png" href="<?php echo htmlspecialchars(asset_url('assets/images/icon.png'), ENT_QUOTES, 'UTF-8'); ?>">
 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars(asset_url('assets/css/style.css'), ENT_QUOTES, 'UTF-8'); ?>">
 </head>
 
 <body id="top" class="page-facilllities">
     <!-- ===== ENHANCED LOADING PAGE ===== -->
     <div id="loading-page">
-        <img src="assets/images/NNG.png" 
+        <img src="<?php echo htmlspecialchars(asset_url('assets/images/NNG.png'), ENT_QUOTES, 'UTF-8'); ?>" 
              alt="Loading..." 
              class="loading-logo">
         
@@ -69,7 +70,7 @@
                     <!-- Health -->
                     <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
                         <div class="services-card">
-                            <img src="assets/images/image14.jpg" alt="Health & Fitness">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image14.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Health & Fitness">
                             <div class="icon-box"><i class="bi bi-heart-pulse"></i></div>
                             <div class="p-4 text-center">
                                 <h4>Health & Fitness</h4>
@@ -81,7 +82,7 @@
                     <!-- Sports -->
                     <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="150">
                         <div class="services-card">
-                            <img src="assets/images/image11.jpg" alt="Sports Facilities">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image11.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Sports Facilities">
                             <div class="icon-box"><i class="bi bi-trophy"></i></div>
                             <div class="p-4 text-center">
                                 <h4>Sports Facilities</h4>
@@ -93,7 +94,7 @@
                     <!-- Swimming -->
                     <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
                         <div class="services-card">
-                            <img src="assets/images/image13.jpg" alt="Swimming Pool">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image13.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Swimming Pool">
                             <div class="icon-box"><i class="bi bi-water"></i></div>
                             <div class="p-4 text-center">
                                 <h4>Swimming Pool</h4>
@@ -105,7 +106,7 @@
                     <!-- Events -->
                     <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="250">
                         <div class="services-card">
-                            <img src="assets/images/image3.jpg" alt="Events">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image3.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Events">
                             <div class="icon-box"><i class="fa-solid fa-calendar-days"></i></div>
                             <div class="p-4 text-center">
                                 <h4>Events</h4>
@@ -117,7 +118,7 @@
                     <!-- Food Court -->
                     <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
                         <div class="services-card">
-                            <img src="assets/images/image31.jpg" alt="Food Court">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image31.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Food Court">
                             <div class="icon-box"><i class="fa-solid fa-plate-wheat"></i></div>
                             <div class="p-4 text-center">
                                 <h4>Food Court</h4>
@@ -129,7 +130,7 @@
                     <!-- Indoor Games -->
                     <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="350">
                         <div class="services-card">
-                            <img src="assets/images/image15.jpg" alt="Indoor Games">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image15.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Indoor Games">
                             <div class="icon-box"><i class="fa-solid fa-table-tennis-paddle-ball"></i></div>
                             <div class="p-4 text-center">
                                 <h4>Indoor Games</h4>
@@ -141,7 +142,7 @@
                     <!-- Lawn -->
                     <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
                         <div class="services-card">
-                            <img src="assets/images/image17.jpg" alt="Lawn">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image17.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Lawn">
                             <div class="icon-box"><i class="fa-solid fa-leaf"></i></div>
                             <div class="p-4 text-center">
                                 <h4>Lawn</h4>
@@ -165,7 +166,7 @@
                     <!-- Playground -->
                     <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
                         <div class="services-card">
-                            <img src="assets/images/image19.jpg" alt="Playground">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image19.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Playground">
                             <div class="icon-box"><i class="fa-solid fa-children"></i></div>
                             <div class="p-4 text-center">
                                 <h4>Playground</h4>
@@ -183,7 +184,7 @@
                 <div class="row">
                     <!-- Logo and About -->
                     <div class="col-lg-4 mb-4" data-aos="fade-right">
-                        <img src="assets/images/NNG.png" alt="Logo" class="style-facilllities-001">
+                        <img src="<?php echo htmlspecialchars(asset_url('assets/images/NNG.png'), ENT_QUOTES, 'UTF-8'); ?>" alt="Logo" class="style-facilllities-001">
                         <p class="mt-3">North Nazimabad Gymkhana — excellence in sports, fitness, and community.</p>
                         <div class="social-icons mt-4">
                             <a href="https://www.facebook.com/NorthNazimabadGymkhana" target="_blank"><i class="bi bi-facebook"></i></a>
@@ -197,21 +198,21 @@
                     <div class="col-lg-2 col-md-4">
                         <h5>Explore</h5>
                         <div class="footer-links">
-                            <a href="./">Home</a><br>
-                            <a href="about">Our Story</a><br>
-                            <a href="facilllities">Experiences</a><br>
-                            <a href="feedback">Stories</a><br>
-                            <a href="membership">Membership</a>
+                            <a href="<?php echo htmlspecialchars(app_url(''), ENT_QUOTES, 'UTF-8'); ?>">Home</a><br>
+                            <a href="<?php echo htmlspecialchars(app_url('about'), ENT_QUOTES, 'UTF-8'); ?>">Our Story</a><br>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Experiences</a><br>
+                            <a href="<?php echo htmlspecialchars(app_url('feedback'), ENT_QUOTES, 'UTF-8'); ?>">Stories</a><br>
+                            <a href="<?php echo htmlspecialchars(app_url('membership'), ENT_QUOTES, 'UTF-8'); ?>">Membership</a>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-4">
                         <h5>Experiences</h5>
                         <div class="footer-links">
-                            <a href="facilllities">Sports</a><br>
-                            <a href="facilllities">Dining</a><br>
-                            <a href="facilllities">Events</a><br>
-                            <a href="facilllities">Wellness</a><br>
-                            <a href="facilllities">Social</a>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Sports</a><br>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Dining</a><br>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Events</a><br>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Wellness</a><br>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Social</a>
                         </div>
                     </div>
                     
@@ -247,6 +248,6 @@
 
     <!-- JavaScript -->
 
-    <script src="assets/js/main.js"></script>
+    <script src="<?php echo htmlspecialchars(asset_url('assets/js/main.js'), ENT_QUOTES, 'UTF-8'); ?>"></script>
 </body>
 </html>

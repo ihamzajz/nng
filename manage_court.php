@@ -407,7 +407,7 @@ function escapeHtml(value) {
 
 function courtImageUrl(filename) {
   if (!filename) return '';
-  if (!state.apiBase) return 'assets/images/icon.png';
+  if (!state.apiBase) return <?php echo json_encode(asset_url('assets/images/icon.png')); ?>;
   return `${state.apiBase}/uploads/courts/${String(filename).replace(/^\/+/, '')}?v=${Date.now()}`;
 }
 

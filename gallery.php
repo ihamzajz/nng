@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/bootstrap.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,14 +17,14 @@
     
     <!-- AOS (Animate on Scroll) for picture effects -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-   <link rel="icon" type="image/png" href="assets/images/icon.png">
+   <link rel="icon" type="image/png" href="<?php echo htmlspecialchars(asset_url('assets/images/icon.png'), ENT_QUOTES, 'UTF-8'); ?>">
 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars(asset_url('assets/css/style.css'), ENT_QUOTES, 'UTF-8'); ?>">
 </head>
 <body id="top" class="page-gallery">
     <!-- ===== ENHANCED LOADING PAGE ===== -->
     <div id="loading-page">
-        <img src="assets/images/NNG.png" alt="Loading..." class="loading-logo">
+        <img src="<?php echo htmlspecialchars(asset_url('assets/images/NNG.png'), ENT_QUOTES, 'UTF-8'); ?>" alt="Loading..." class="loading-logo">
         <div class="loading-spinner"></div>
         <div class="loading-progress">
             <div class="loading-progress-bar"></div>
@@ -57,7 +58,7 @@
                     <!-- Image 1 -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="50">
                         <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                            <img src="assets/images/image13.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Swimming Pool" loading="lazy">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image13.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Swimming Pool" loading="lazy">
                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                 <h5 class="text-white mb-0">Swimming Pool</h5>
                             </div>
@@ -67,7 +68,7 @@
                     <!-- Image 2 -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                            <img src="assets/images/image14.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Gym Facility" loading="lazy">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image14.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Gym Facility" loading="lazy">
                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                 <h5 class="text-white mb-0">Modern Gym</h5>
                             </div>
@@ -77,7 +78,7 @@
                     <!-- Image 3 -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
                         <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                            <img src="assets/images/image23.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Squash Court" loading="lazy">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image23.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Squash Court" loading="lazy">
                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                 <h5 class="text-white mb-0">Squash Court</h5>
                             </div>
@@ -87,7 +88,7 @@
                     <!-- Image 4 -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                         <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                            <img src="assets/images/image22.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Badminton Court" loading="lazy">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image22.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Badminton Court" loading="lazy">
                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                 <h5 class="text-white mb-0">Badminton Court</h5>
                             </div>
@@ -97,7 +98,7 @@
                     <!-- Image 5 -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="250">
                         <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                            <img src="assets/images/image10.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Cricket" loading="lazy">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image10.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Cricket" loading="lazy">
                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                 <h5 class="text-white mb-0">Food Court</h5>
                             </div>
@@ -107,7 +108,7 @@
                     <!-- Image 6 -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
                         <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                            <img src="assets/images/image34.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Karate" loading="lazy">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image34.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Karate" loading="lazy">
                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                 <h5 class="text-white mb-0">Karate</h5>
                             </div>
@@ -117,7 +118,7 @@
                     <!-- Image 7 -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="350">
                         <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                            <img src="assets/images/image15.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Table Tennis" loading="lazy">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image15.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Table Tennis" loading="lazy">
                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                 <h5 class="text-white mb-0">Indoor Games</h5>
                             </div>
@@ -127,7 +128,7 @@
                     <!-- Image 8 -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
                         <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                            <img src="assets/images/image36.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Snooker Room" loading="lazy">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image36.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Snooker Room" loading="lazy">
                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                 <h5 class="text-white mb-0">Snooker Room</h5>
                             </div>
@@ -137,7 +138,7 @@
                     <!-- Image 9 -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="450">
                         <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                            <img src="assets/images/image21.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Cricket Ground" loading="lazy">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image21.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Cricket Ground" loading="lazy">
                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                 <h5 class="text-white mb-0">Cricket Ground</h5>
                             </div>
@@ -147,7 +148,7 @@
                     <!-- Image 10 -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
                         <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                            <img src="assets/images/image19.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Kids Play Area" loading="lazy">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image19.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Kids Play Area" loading="lazy">
                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                 <h5 class="text-white mb-0">Kids Play Area</h5>
                             </div>
@@ -157,7 +158,7 @@
                     <!-- Image 11 -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="550">
                         <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                            <img src="assets/images/image35.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Paddel" loading="lazy">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image35.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Paddel" loading="lazy">
                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                 <h5 class="text-white mb-0">Paddel Court</h5>
                             </div>
@@ -167,7 +168,7 @@
                     <!-- Image 12 -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
                         <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                            <img src="assets/images/image1.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Basketball Court" loading="lazy">
+                            <img src="<?php echo htmlspecialchars(asset_url('assets/images/image1.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Basketball Court" loading="lazy">
                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                 <h5 class="text-white mb-0">Basket Ball Court</h5>
                             </div>
@@ -179,7 +180,7 @@
                         <!-- Image 13 -->
                         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="650">
                             <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                                <img src="assets/images/image17.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Lawn" loading="lazy">
+                                <img src="<?php echo htmlspecialchars(asset_url('assets/images/image17.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Lawn" loading="lazy">
                                 <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                     <h5 class="text-white mb-0">Lawn</h5>
                                 </div>
@@ -189,7 +190,7 @@
                         <!-- Image 14 -->
                         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="700">
                             <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                                <img src="assets/images/image20.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="FootBall Ground" loading="lazy">
+                                <img src="<?php echo htmlspecialchars(asset_url('assets/images/image20.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="FootBall Ground" loading="lazy">
                                 <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                     <h5 class="text-white mb-0">FootBall Ground</h5>
                                 </div>
@@ -199,7 +200,7 @@
                         <!-- Image 15 -->
                         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="750">
                             <div class="gallery-item position-relative overflow-hidden rounded-4 shadow-lg">
-                                <img src="assets/images/joging.jpg" class="img-fluid w-100 h-100 object-fit-cover" alt="Jogging Track" loading="lazy">
+                                <img src="<?php echo htmlspecialchars(asset_url('assets/images/joging.jpg'), ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid w-100 h-100 object-fit-cover" alt="Jogging Track" loading="lazy">
                                 <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4">
                                     <h5 class="text-white mb-0">Jogging Track</h5>
                                 </div>
@@ -223,7 +224,7 @@
             <!-- Event 1 -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                 <div class="event-card animate-on-scroll">
-                    <img src="assets/images/image7.jpg" alt="Badminton Tournament">
+                    <img src="<?php echo htmlspecialchars(asset_url('assets/images/image7.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Badminton Tournament">
                     <div class="event-content">
                         <h4>Badminton Tournament</h4>
                         <p>Players competed with passion and precision, delivering exciting rallies and remarkable performances.</p>
@@ -234,7 +235,7 @@
             <!-- Event 2 -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
                 <div class="event-card animate-on-scroll">
-                    <img src="assets/images/image1.jpg" alt="Basketball Tournament">
+                    <img src="<?php echo htmlspecialchars(asset_url('assets/images/image1.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Basketball Tournament">
                     <div class="event-content">
                         <h4>BasketBall Tournament</h4>
                         <p>Teams displayed skill, coordination, and determination through intense and competitive matches.</p>
@@ -245,7 +246,7 @@
             <!-- Event 3 -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                 <div class="event-card animate-on-scroll">
-                    <img src="assets/images/image37.jpg" alt="Scrabble Tournament">
+                    <img src="<?php echo htmlspecialchars(asset_url('assets/images/image37.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Scrabble Tournament">
                     <div class="event-content">
                         <h4>Scrabble Tournament</h4>
                         <p>Participants challenged each other with strategic gameplay, sharp vocabulary, and quick thinking.</p>
@@ -256,7 +257,7 @@
             <!-- Event 4 -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="250">
                 <div class="event-card animate-on-scroll">
-                    <img src="assets/images/image3.jpg" alt="Mehfil-e-Naat">
+                    <img src="<?php echo htmlspecialchars(asset_url('assets/images/image3.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Mehfil-e-Naat">
                     <div class="event-content">
                         <h4>Mehfil-e-Naat</h4>
                         <p>Attendees participated in a soulful gathering, sharing devotion, reverence, and spiritual reflection.</p>
@@ -267,7 +268,7 @@
             <!-- Event 5 -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
                 <div class="event-card animate-on-scroll">
-                    <img src="assets/images/image5.jpg" alt="Flag Hoisting Ceremony">
+                    <img src="<?php echo htmlspecialchars(asset_url('assets/images/image5.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Flag Hoisting Ceremony">
                     <div class="event-content">
                         <h4>Flag Hoisting Ceremony</h4>
                         <p>Members gathered to hoist the national flag, expressing respect, unity, and love for Pakistan.</p>
@@ -278,7 +279,7 @@
             <!-- Event 6 -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="350">
                 <div class="event-card animate-on-scroll">
-                    <img src="assets/images/image38.jpg" alt="14 August Celebration">
+                    <img src="<?php echo htmlspecialchars(asset_url('assets/images/image38.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="14 August Celebration">
                     <div class="event-content">
                         <h4>14 August Celebration</h4>
                         <p>Enjoy a day full of activities, games, and entertainment for the whole family.</p>
@@ -289,7 +290,7 @@
             <!-- Event 7 -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
                 <div class="event-card animate-on-scroll">
-                    <img src="assets/images/image39.jpg" alt="Red Crescent Society">
+                    <img src="<?php echo htmlspecialchars(asset_url('assets/images/image39.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Red Crescent Society">
                     <div class="event-content">
                         <h4>Red Crescent Society</h4>
                         <p>A Red Crescent first-aid training session was successfully conducted at the gymkhana, enhancing emergency response awareness among our members.</p>
@@ -300,7 +301,7 @@
             <!-- Event 8 -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="450">
                 <div class="event-card animate-on-scroll">
-                    <img src="assets/images/image41.jpg" alt="New Year Celebration">
+                    <img src="<?php echo htmlspecialchars(asset_url('assets/images/image41.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="New Year Celebration">
                     <div class="event-content">
                         <h4>New Year Celebration</h4>
                         <p>Members enjoyed fireworks, music, and welcoming the new year together.</p>
@@ -311,7 +312,7 @@
             <!-- Event 9 -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
                 <div class="event-card animate-on-scroll">
-                    <img src="assets/images/image9.jpg" alt="Fun Gala & Hi-Tea">
+                    <img src="<?php echo htmlspecialchars(asset_url('assets/images/image9.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Fun Gala & Hi-Tea">
                     <div class="event-content">
                         <h4>Fun Gala & Hi-Tea</h4>
                         <p>Members and families enjoyed eating together and spending a fun time</p>
@@ -328,7 +329,7 @@
                 <div class="row">
                     <!-- Logo and Description -->
                     <div class="col-lg-4 mb-4" data-aos="fade-right">
-                        <img src="assets/images/NNG.png" alt="Logo" class="mb-3 style-gallery-003">
+                        <img src="<?php echo htmlspecialchars(asset_url('assets/images/NNG.png'), ENT_QUOTES, 'UTF-8'); ?>" alt="Logo" class="mb-3 style-gallery-003">
                         <p>North Nazimabad Gymkhana — excellence in sports, fitness, and community.</p>
                         <div class="social-icons mt-4">
                             <a href="https://www.facebook.com/NorthNazimabadGymkhana" target="_blank"><i class="bi bi-facebook"></i></a>
@@ -342,11 +343,11 @@
                     <div class="col-lg-2 col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
                         <h5 class="mb-3">Explore</h5>
                         <div class="footer-links">
-                            <a href="./">Home</a>
-                            <a href="about">About</a>
-                            <a href="facilllities">Facilities</a>
-                            <a href="feedback">Feedback</a>
-                            <a href="membership">Membership</a>
+                            <a href="<?php echo htmlspecialchars(app_url(''), ENT_QUOTES, 'UTF-8'); ?>">Home</a>
+                            <a href="<?php echo htmlspecialchars(app_url('about'), ENT_QUOTES, 'UTF-8'); ?>">About</a>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Facilities</a>
+                            <a href="<?php echo htmlspecialchars(app_url('feedback'), ENT_QUOTES, 'UTF-8'); ?>">Feedback</a>
+                            <a href="<?php echo htmlspecialchars(app_url('membership'), ENT_QUOTES, 'UTF-8'); ?>">Membership</a>
                         </div>
                     </div>
                     
@@ -354,11 +355,11 @@
                     <div class="col-lg-2 col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
                         <h5 class="mb-3">Facilities</h5>
                         <div class="footer-links">
-                            <a href="facilllities">Health & Fitness</a>
-                            <a href="facilllities">Sports Facilities</a>
-                            <a href="facilllities">Swimming Pool</a>
-                            <a href="facilllities">Indoor Games</a>
-                            <a href="facilllities">Events</a>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Health & Fitness</a>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Sports Facilities</a>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Swimming Pool</a>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Indoor Games</a>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Events</a>
                         </div>
                     </div>
                     
@@ -391,6 +392,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <script src="assets/js/main.js"></script>
+    <script src="<?php echo htmlspecialchars(asset_url('assets/js/main.js'), ENT_QUOTES, 'UTF-8'); ?>"></script>
 </body>
 </html>

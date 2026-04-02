@@ -5,7 +5,7 @@ declare(strict_types=1);
 if (!function_exists('api_base_url')) {
     function api_base_url(): string
     {
-        return (string) config('api', 'http://localhost:5000');
+        return (string) config('api', 'https://api.jamtechsolutionz.com');
     }
 }
 

@@ -203,7 +203,7 @@ if (isset($_GET['ajax'])) {
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" referrerpolicy="no-referrer" />
 <link rel="icon" type="image/png" href="<?php echo htmlspecialchars(asset_url('assets/images/icon.png'), ENT_QUOTES, 'UTF-8'); ?>">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="<?php echo htmlspecialchars(asset_url('assets/css/style.css'), ENT_QUOTES, 'UTF-8'); ?>">
 <style>
 body.page-event-form { font-family:'Poppins',sans-serif; background:#e9ecef; color:#212529; }
 body.page-event-form .event-shell { padding:18px; max-width:1120px; }
@@ -349,7 +349,7 @@ function timeLabel(minutes) { const h24 = Math.floor(minutes/60); const m = minu
 function timeValue(minutes) { return `${String(Math.floor(minutes/60)).padStart(2,'0')}:${String(minutes%60).padStart(2,'0')}:00`; }
 function overlaps(a1, a2, b1, b2) { return a1 < b2 && a2 > b1; }
 function escapeHtml(value) { return String(value ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
-function getEventImageUrl(item) { return item?.picture ? `${state.apiBase}/uploads/events/${String(item.picture).replace(/^\/+/, '')}` : 'assets/images/icon.png'; }
+function getEventImageUrl(item) { return item?.picture ? `${state.apiBase}/uploads/events/${String(item.picture).replace(/^\/+/, '')}` : <?php echo json_encode(asset_url('assets/images/icon.png')); ?>; }
 
 async function requestJson(url, options = {}) {
   const response = await fetch(url, {
@@ -422,7 +422,7 @@ function renderEventList() {
   el.eventList.innerHTML = items.map((item) => `
     <button type="button" class="event-item ${state.selectedEvent && String(state.selectedEvent.id) === String(item.id) ? 'active' : ''}" data-event-id="${escapeHtml(item.id)}">
       <div class="event-item-wrap">
-        <img class="event-thumb" data-preview-image="${escapeHtml(getEventImageUrl(item))}" data-preview-alt="${escapeHtml(item.name || 'Event')}" src="${escapeHtml(getEventImageUrl(item))}" alt="${escapeHtml(item.name || 'Event')}" onerror="this.onerror=null;this.src='assets/images/icon.png';">
+        <img class="event-thumb" data-preview-image="${escapeHtml(getEventImageUrl(item))}" data-preview-alt="${escapeHtml(item.name || 'Event')}" src="${escapeHtml(getEventImageUrl(item))}" alt="${escapeHtml(item.name || 'Event')}" onerror="this.onerror=null;this.src=<?php echo htmlspecialchars(json_encode(asset_url('assets/images/icon.png')), ENT_QUOTES, 'UTF-8'); ?>;">
         <div class="event-item-title">${escapeHtml(item.name || 'Event')}</div>
       </div>
     </button>
@@ -468,7 +468,7 @@ function renderBookingForm() {
       <div class="field-card">
         <h3>Event</h3>
         <div class="event-field-row">
-          <img class="event-preview" id="selectedEventPreview" src="${escapeHtml(getEventImageUrl(state.selectedEvent))}" alt="${escapeHtml(state.selectedEvent.name || 'Event')}" onerror="this.onerror=null;this.src='assets/images/icon.png';">
+          <img class="event-preview" id="selectedEventPreview" src="${escapeHtml(getEventImageUrl(state.selectedEvent))}" alt="${escapeHtml(state.selectedEvent.name || 'Event')}" onerror="this.onerror=null;this.src=<?php echo htmlspecialchars(json_encode(asset_url('assets/images/icon.png')), ENT_QUOTES, 'UTF-8'); ?>;">
           <input class="field" type="text" value="${escapeHtml(state.selectedEvent.name || '')}" disabled>
         </div>
       </div>

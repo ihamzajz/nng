@@ -1,109 +1,92 @@
+<?php require_once __DIR__ . '/bootstrap.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Join North Nazimabad Gymkhana - Premier sports and recreation club in Karachi. Choose from flexible membership plans and enjoy world-class facilities.">
     <title>North Nazimabad Gymkhana | Membership</title>
-    
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    
-    <!-- Google Fonts - EXQUISITE PAIRING -->
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- AOS (Animate on Scroll) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-   <link rel="icon" type="image/png" href="assets/images/icon.png">
-
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/png" href="<?php echo htmlspecialchars(asset_url('assets/images/icon.png'), ENT_QUOTES, 'UTF-8'); ?>">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars(asset_url('assets/css/public-refresh.css'), ENT_QUOTES, 'UTF-8'); ?>">
 </head>
-<body id="top" class="page-membership">
-    <!-- ===== ENHANCED LOADING PAGE ===== -->
+
+<body class="page-membership">
     <div id="loading-page">
-        <img src="assets/images/NNG.png" alt="Loading..." class="loading-logo">
+        <img src="<?php echo htmlspecialchars(asset_url('assets/images/NNG.png'), ENT_QUOTES, 'UTF-8'); ?>" alt="North Nazimabad Gymkhana" class="loading-logo">
         <div class="loading-spinner"></div>
         <div class="loading-progress">
             <div class="loading-progress-bar"></div>
         </div>
-        <div class="loading-text">LOADING<span class="loading-dots"></span></div>
+        <div class="loading-text">EST. 1965</div>
     </div>
-    <!-- ===== END LOADING PAGE ===== -->
 
-    <!-- ===== MAIN CONTENT ===== -->
     <div class="main-content">
-        <!-- Back to Top Button -->
-        <a href="#top" class="back-to-top" id="backToTop">
-            <i class="bi bi-arrow-up"></i>
+        <a href="#" class="back-to-top" id="backToTop">
+            <i class="bi bi-arrow-up-short"></i>
         </a>
 
-        <!-- Navigation -->
         <?php include __DIR__ . '/navbar.php'; ?>
 
-        <!-- Membership Hero Section -->
         <section class="membership-hero" data-aos="fade-up">
-            <div class="container">
-                <h1>Become a Member</h1>
-                <p>Join North Nazimabad Gymkhana - Karachi's premier sports and recreation club. Enjoy world-class facilities, exclusive events, and a vibrant community.</p>
-            </div>
+            <h1>Become a Member</h1>
+            <p>Join North Nazimabad Gymkhana - Karachi's premier sports and recreation club. Enjoy world-class facilities, exclusive events, and a vibrant community.</p>
         </section>
 
-        <!-- Main Content Container -->
-        <section class="container">
-            <div class="form-container" data-aos="fade-up" data-aos-delay="100">
-                <!-- SUCCESS ALERT (Initially hidden) -->
-                <div class="alert-success d-none" id="successAlert">
-                    <i class="bi bi-check-circle-fill me-2 fs-4"></i>
+        <div class="membership-container">
+            <div class="form-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="success-alert" id="successAlert">
+                    <i class="bi bi-check-circle-fill"></i>
                     <div>
                         <strong>Application Submitted Successfully!</strong><br>
                         Your membership application has been received. Our team will contact you shortly.
                     </div>
-                    <button type="button" class="btn-close ms-auto" onclick="hideAlert()"></button>
+                    <button class="btn-close-custom" onclick="hideAlert()">&times;</button>
                 </div>
 
-                <!-- ORIGINAL FORM (Initially visible) -->
-                <div id="membershipFormSection">
+                <div id="formSection">
                     <form id="membershipForm">
-                        <!-- Personal Information Section -->
                         <div class="form-section" data-aos="fade-up" data-aos-delay="150">
-                            <h2><i class="bi bi-person-circle me-2"></i> Personal Information</h2>
+                            <h2><i class="bi bi-person-circle"></i> Personal Information</h2>
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label for="fullName" class="form-label required">Full Name</label>
-                                    <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
+                                    <label class="form-label required">Full Name</label>
+                                    <input type="text" class="form-control name-field" id="fullName" placeholder="Enter your full name (letters only)">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="fatherName" class="form-label required">Father's Name</label>
-                                    <input type="text" class="form-control" id="fatherName" placeholder="Enter father's name" required>
+                                    <label class="form-label required">Father's Name</label>
+                                    <input type="text" class="form-control name-field" id="fatherName" placeholder="Enter father's name (letters only)">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="email" class="form-label required">Email Address</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                                    <label class="form-label required">Email Address</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="phone" class="form-label required">Phone Number</label>
-                                    <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
+                                    <label class="form-label required">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="cnic" class="form-label required">CNIC Number</label>
-                                    <input type="text" class="form-control" id="cnic" placeholder="XXXXX-XXXXXXX-X" required>
+                                    <label class="form-label required">CNIC Number</label>
+                                    <input type="text" class="form-control" id="cnic" placeholder="XXXXX-XXXXXXX-X">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="dob" class="form-label required">Date of Birth</label>
-                                    <input type="date" class="form-control" id="dob" required>
+                                    <label class="form-label required">Date of Birth</label>
+                                    <input type="date" class="form-control" id="dob">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="gender" class="form-label required">Gender</label>
-                                    <select class="form-select" id="gender" required>
+                                    <label class="form-label required">Gender</label>
+                                    <select class="form-select" id="gender">
                                         <option value="" selected disabled>Select Gender</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="maritalStatus" class="form-label">Marital Status</label>
+                                    <label class="form-label">Marital Status</label>
                                     <select class="form-select" id="maritalStatus">
                                         <option value="" selected disabled>Select Status</option>
                                         <option value="single">Single</option>
@@ -112,75 +95,60 @@
                                     </select>
                                 </div>
                                 <div class="col-12">
-                                    <label for="address" class="form-label required">Residential Address</label>
-                                    <textarea class="form-control" id="address" rows="3" placeholder="Enter your complete address" required></textarea>
+                                    <label class="form-label required">Residential Address</label>
+                                    <textarea class="form-control" id="address" rows="2" placeholder="Enter your complete address"></textarea>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Membership Type Section -->
                         <div class="form-section" data-aos="fade-up" data-aos-delay="200">
-                            <h2><i class="bi bi-credit-card me-2"></i> Membership Type</h2>
-                            <div class="row g-3">
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="membership-type-card" onclick="selectMembershipType('annual', this)">
-                                        <h5>Annual</h5>
-                                        <div class="membership-price">Rs. 25,000</div>
-                                        <div class="membership-duration">12 Months</div>
-                                        <p class="small mt-2">Full access to all facilities</p>
-                                    </div>
+                            <h2><i class="bi bi-credit-card"></i> Membership Type</h2>
+                            <div class="membership-grid" id="membershipGrid">
+                                <div class="membership-card" data-type="annual">
+                                    <h5>Annual</h5>
+                                    <div class="membership-price">Rs. 25,000</div>
+                                    <div class="membership-duration">12 Months</div>
+                                    <p>Full access to all facilities</p>
                                 </div>
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="membership-type-card" onclick="selectMembershipType('half-yearly', this)">
-                                        <h5>Half-Yearly</h5>
-                                        <div class="membership-price">Rs. 15,000</div>
-                                        <div class="membership-duration">6 Months</div>
-                                        <p class="small mt-2">All facilities access</p>
-                                    </div>
+                                <div class="membership-card" data-type="half-yearly">
+                                    <h5>Half-Yearly</h5>
+                                    <div class="membership-price">Rs. 15,000</div>
+                                    <div class="membership-duration">6 Months</div>
+                                    <p>All facilities access</p>
                                 </div>
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="membership-type-card" onclick="selectMembershipType('quarterly', this)">
-                                        <h5>Quarterly</h5>
-                                        <div class="membership-price">Rs. 9,000</div>
-                                        <div class="membership-duration">3 Months</div>
-                                        <p class="small mt-2">Standard facilities access</p>
-                                    </div>
+                                <div class="membership-card" data-type="quarterly">
+                                    <h5>Quarterly</h5>
+                                    <div class="membership-price">Rs. 9,000</div>
+                                    <div class="membership-duration">3 Months</div>
+                                    <p>Standard facilities access</p>
                                 </div>
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="membership-type-card" onclick="selectMembershipType('monthly', this)">
-                                        <h5>Monthly</h5>
-                                        <div class="membership-price">Rs. 3,500</div>
-                                        <div class="membership-duration">1 Month</div>
-                                        <p class="small mt-2">Basic facilities access</p>
-                                    </div>
+                                <div class="membership-card" data-type="monthly">
+                                    <h5>Monthly</h5>
+                                    <div class="membership-price">Rs. 3,500</div>
+                                    <div class="membership-duration">1 Month</div>
+                                    <p>Basic facilities access</p>
                                 </div>
                             </div>
-                            <input type="hidden" id="membershipType" required>
-                            <div class="text-danger mt-2 d-none" id="membershipTypeError">
-                                Please select a membership type.
-                            </div>
+                            <input type="hidden" id="membershipType">
+                            <div class="error-message" id="membershipTypeError">Please select a membership type.</div>
                         </div>
 
-                        <!-- Emergency Contact -->
                         <div class="form-section" data-aos="fade-up" data-aos-delay="250">
-                            <h2><i class="bi bi-telephone me-2"></i> Emergency Contact</h2>
+                            <h2><i class="bi bi-telephone"></i> Emergency Contact</h2>
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label for="emergencyName" class="form-label required">Emergency Contact Name</label>
-                                    <input type="text" class="form-control" id="emergencyName" placeholder="Full name of emergency contact" required>
+                                    <label class="form-label required">Emergency Contact Name</label>
+                                    <input type="text" class="form-control name-field" id="emergencyName" placeholder="Full name (letters only)">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="emergencyPhone" class="form-label required">Emergency Contact Phone</label>
-                                    <input type="tel" class="form-control" id="emergencyPhone" placeholder="Phone number" required>
+                                    <label class="form-label required">Emergency Contact Phone</label>
+                                    <input type="tel" class="form-control" id="emergencyPhone" placeholder="Phone number">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Terms and Conditions -->
                         <div class="form-section" data-aos="fade-up" data-aos-delay="300">
-                            <h2><i class="bi bi-file-text me-2"></i> Terms & Conditions</h2>
-                            
-                            <!-- Terms Box -->
+                            <h2><i class="bi bi-file-text"></i> Terms & Conditions</h2>
                             <div class="terms-box">
                                 <p><strong>By submitting this form, I agree to the following terms and conditions:</strong></p>
                                 <p>1. I confirm that all information provided is accurate and complete.</p>
@@ -194,20 +162,15 @@
                                 <p>9. I understand that membership approval is subject to verification of documents.</p>
                                 <p>10. I agree to pay membership fees as per the selected plan.</p>
                             </div>
-                            
-                            <!-- Agree Checkbox -->
-                            <div class="form-check mb-3">
-                                <input class="form-check-input style-membership-001" type="checkbox" id="agreeTerms" required>
-                                <label class="form-check-label style-membership-002" for="agreeTerms">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="agreeTerms">
+                                <label class="form-check-label" for="agreeTerms">
                                     I have read and agree to the terms and conditions <span class="required"></span>
                                 </label>
-                                <div class="text-danger mt-1 d-none" id="termsError">
-                                    You must agree to the terms and conditions.
-                                </div>
                             </div>
+                            <div class="error-message" id="termsError">You must agree to the terms and conditions.</div>
                         </div>
 
-                   
                         <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="350">
                             <button type="submit" class="submit-btn">
                                 <i class="bi bi-send"></i> Submit Membership Application
@@ -216,20 +179,18 @@
                     </form>
                 </div>
 
-                
-                <div id="confirmationSection" class="d-none new-form-section">
+                <div id="confirmationSection" style="display: none;">
                     <div class="confirmation-section">
                         <div class="confirmation-icon">
                             <i class="bi bi-check-circle-fill"></i>
                         </div>
-                        <h2 class="mb-3 style-membership-003">Application Submitted Successfully!</h2>
-                        <p class="lead mb-4 style-membership-004">Thank you for applying to North Nazimabad Gymkhana.</p>
-                        
+                        <h2>Application Submitted Successfully!</h2>
+                        <p>Thank you for applying to North Nazimabad Gymkhana.</p>
                         <div class="confirmation-details">
-                            <h5 class="mb-4 style-membership-005">Application Summary</h5>
+                            <h5 class="mb-3">Application Summary</h5>
                             <div class="detail-item">
                                 <span class="detail-label">Application ID:</span>
-                                <span class="detail-value" id="appId">North Nazimbad Gymkhana Trust</span>
+                                <span class="detail-value" id="appId">-</span>
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">Name:</span>
@@ -248,93 +209,71 @@
                                 <span class="detail-value" id="confirmDate">-</span>
                             </div>
                         </div>
-                        
-                        <p class="mb-4 style-membership-006">Our membership team will contact you within 2-3 business days for the next steps.</p>
-                        
-                        <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
-                            <button onclick="submitAnotherApplication()" class="btn btn-outline-primary">
-                                <i class="bi bi-plus-circle me-2"></i>Submit Another Application
-                            </button>
-                            <button onclick="downloadApplication()" class="btn btn-primary">
-                                <i class="bi bi-download me-2"></i>Download Application
-                            </button>
+                        <p>Our membership team will contact you within 2-3 business days for the next steps.</p>
+                        <div class="d-flex gap-3 justify-content-center flex-wrap">
+                            <button onclick="submitAnother()" class="btn-outline">Submit Another Application</button>
+                            <button onclick="downloadApp()" class="btn-primary-filled">Download Application</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Footer - Enhanced -->
         <footer class="footer">
             <div class="container">
                 <div class="row">
-                    <!-- Logo and Description -->
                     <div class="col-lg-4 mb-4" data-aos="fade-right">
-                        <img src="assets/images/NNG.png" alt="Logo" class="mb-3 style-membership-007">
-                        <p>North Nazimabad Gymkhana — excellence in sports, fitness, and community.</p>
-                        <div class="social-icons mt-4">
-                            <a href="https://www.facebook.com/NorthNazimabadGymkhana "target="_blank"><i class="bi bi-facebook"></i></a>
-                          
-                            <a href="https://www.facebook.com/NorthNazimabadGymkhana" target="_blank"><i class="bi bi-instagram"></i></a>
-                            <a href="https://www.youtube.com/@NNG_SPORTS_CLUB-tn6ew" target="_blank"><i class="bi bi-youtube"></i></a>
-                        </div>  
+                        <img src="<?php echo htmlspecialchars(asset_url('assets/images/NNG.png'), ENT_QUOTES, 'UTF-8'); ?>" alt="Logo" style="width: 140px; height: auto;" class="mb-3">
+                        <p>North Nazimabad Gymkhana excellence in sports, fitness, and community since 1965.</p>
+                        <div class="social-icons">
+                            <a href="https://www.facebook.com/NorthNazimabadGymkhana" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.facebook.com/NorthNazimabadGymkhana" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.youtube.com/@NNG_SPORTS_CLUB-tn6ew" target="_blank"><i class="fab fa-youtube"></i></a>
+                        </div>
                     </div>
-                    
-                    <!-- Quick Links -->
                     <div class="col-lg-2 col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-                        <h5 class="mb-3">Explore</h5>
+                        <h5>EXPLORE</h5>
                         <div class="footer-links">
-                            <a href="./">Home</a>
-                            <a href="about">About</a>
-                            <a href="facilllities">Facilities</a>
-                            <a href="feedback">Feedback</a>
-                            <a href="membership">Membership</a>
+                            <a href="<?php echo htmlspecialchars(app_url(''), ENT_QUOTES, 'UTF-8'); ?>">Home</a>
+                            <a href="<?php echo htmlspecialchars(app_url('about'), ENT_QUOTES, 'UTF-8'); ?>">About</a>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Facilities</a>
+                            <a href="<?php echo htmlspecialchars(app_url('feedback'), ENT_QUOTES, 'UTF-8'); ?>">Feedback</a>
+                            <a href="<?php echo htmlspecialchars(app_url('membership'), ENT_QUOTES, 'UTF-8'); ?>">Membership</a>
                         </div>
                     </div>
-                    
-                    <!-- Facilities -->
                     <div class="col-lg-2 col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-                        <h5 class="mb-3">Facilities</h5>
+                        <h5>FACILITIES</h5>
                         <div class="footer-links">
-                            <a href="facilllities">Health & Fitness</a>
-                            <a href="facilllities">Sports Facilities</a>
-                            <a href="facilllities">Swimming Pool</a>
-                            <a href="facilllities">Indoor Games</a>
-                            <a href="facilllities">Events</a>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Health & Fitness</a>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Sports Complex</a>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Swimming Pool</a>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Indoor Games</a>
+                            <a href="<?php echo htmlspecialchars(app_url('facilllities'), ENT_QUOTES, 'UTF-8'); ?>">Event Spaces</a>
                         </div>
                     </div>
-                    
-                    <!-- Subscribe -->
                     <div class="col-lg-4 col-md-4 mb-4" data-aos="fade-left" data-aos-delay="300">
-                        <h5 class="mb-3">Connect</h5>
-                        <p>Subscribe to get updates on events and offers</p>
-                        <div class="input-group mb-3">
-                            <input type="email" class="form-control" placeholder="Your Email">
-                            <button class="btn btn-primary" type="button">
-                                <i class="bi bi-send"></i>
-                            </button>
+                        <h5>CONNECT</h5>
+                        <p>Subscribe to receive updates on events, tournaments, and membership offers.</p>
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email address">
+                            <button class="btn" type="button"><i class="bi bi-send-fill"></i></button>
                         </div>
                     </div>
                 </div>
-                
-                <hr class="my-4">
-                
-                <!-- Copyright -->
+                <hr>
                 <div class="row">
                     <div class="col-12 text-center">
-                        <p class="mb-0 small opacity-75">&copy; 2026 North Nazimabad Gymkhana. All rights reserved.</p>
+                        <p class="copyright mb-0">&copy; 2026 North Nazimabad Gymkhana Trust. All rights reserved.</p>
                     </div>
                 </div>
             </div>
         </footer>
-    </div> <!-- End of .main-content -->
+    </div>
 
-    <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- AOS (Animate on Scroll) -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-    <script src="assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <script src="<?php echo htmlspecialchars(asset_url('assets/js/public-refresh.js'), ENT_QUOTES, 'UTF-8'); ?>"></script>
 </body>
+
 </html>

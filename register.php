@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="icon" type="image/png" href="<?php echo htmlspecialchars(asset_url('assets/images/icon.png'), ENT_QUOTES, 'UTF-8'); ?>">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="<?php echo htmlspecialchars(asset_url('assets/css/style.css'), ENT_QUOTES, 'UTF-8'); ?>">
 </head>
 
 <body class="page-register page-login">
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="auth-card bg-white border w-100 style-login-001">
             <div class="row g-0">
                 <div class="col-lg-6 login-image-col">
-                    <img src="assets/images/image1.jpg" alt="Company" class="img-fluid h-100 w-100 style-login-002">
+                    <img src="<?php echo htmlspecialchars(asset_url('assets/images/image1.jpg'), ENT_QUOTES, 'UTF-8'); ?>" alt="Company" class="img-fluid h-100 w-100 style-login-002">
                 </div>
 
                 <div class="col-lg-6">
@@ -149,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <script src="assets/js/main.js"></script>
+    <script src="<?php echo htmlspecialchars(asset_url('assets/js/main.js'), ENT_QUOTES, 'UTF-8'); ?>"></script>
     <?php if ($successMessage !== ''): ?>
     <script>
         window.setTimeout(() => {

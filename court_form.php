@@ -329,7 +329,7 @@ if (isset($_GET['ajax'])) {
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" referrerpolicy="no-referrer" />
 <link rel="icon" type="image/png" href="<?php echo htmlspecialchars(asset_url('assets/images/icon.png'), ENT_QUOTES, 'UTF-8'); ?>">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="<?php echo htmlspecialchars(asset_url('assets/css/style.css'), ENT_QUOTES, 'UTF-8'); ?>">
 <style>
 body.page-court-form { font-family:'Poppins',sans-serif; background:#e9ecef; color:#212529; }
 body.page-court-form .court-shell { padding:18px; max-width:1120px; }
@@ -537,7 +537,7 @@ function resetPlayersToSelf() {
   const me = createPlayerSummary(fallbackUser);
   state.selectedPlayers = me ? [me] : [];
 }
-function getCourtImageUrl(court) { return court?.picture ? `${state.apiBase}/uploads/courts/${String(court.picture).replace(/^\/+/, '')}` : 'assets/images/icon.png'; }
+function getCourtImageUrl(court) { return court?.picture ? `${state.apiBase}/uploads/courts/${String(court.picture).replace(/^\/+/, '')}` : <?php echo json_encode(asset_url('assets/images/icon.png')); ?>; }
 
 async function requestJson(url, options = {}) {
   const response = await fetch(url, {
@@ -630,7 +630,7 @@ function renderCourtList() {
   el.courtList.innerHTML = courts.map((court) => `
     <button type="button" class="court-item ${state.selectedCourt && String(state.selectedCourt.id) === String(court.id) ? 'active' : ''}" data-court-id="${escapeHtml(court.id)}">
       <div class="court-item-wrap">
-        <img class="court-thumb" data-preview-image="${escapeHtml(getCourtImageUrl(court))}" data-preview-alt="${escapeHtml(court.name || 'Court')}" src="${escapeHtml(getCourtImageUrl(court))}" alt="${escapeHtml(court.name || 'Court')}" onerror="this.onerror=null;this.src='assets/images/icon.png';">
+        <img class="court-thumb" data-preview-image="${escapeHtml(getCourtImageUrl(court))}" data-preview-alt="${escapeHtml(court.name || 'Court')}" src="${escapeHtml(getCourtImageUrl(court))}" alt="${escapeHtml(court.name || 'Court')}" onerror="this.onerror=null;this.src=<?php echo htmlspecialchars(json_encode(asset_url('assets/images/icon.png')), ENT_QUOTES, 'UTF-8'); ?>;">
         <div class="court-item-title">${escapeHtml(court.name || 'Court')}</div>
       </div>
     </button>
@@ -677,7 +677,7 @@ function renderBookingForm() {
       <div class="field-card">
         <h3>Court</h3>
         <div class="court-field-row">
-          <img class="court-preview" id="selectedCourtPreview" src="${escapeHtml(getCourtImageUrl(state.selectedCourt))}" alt="${escapeHtml(state.selectedCourt.name || 'Court')}" onerror="this.onerror=null;this.src='assets/images/icon.png';">
+          <img class="court-preview" id="selectedCourtPreview" src="${escapeHtml(getCourtImageUrl(state.selectedCourt))}" alt="${escapeHtml(state.selectedCourt.name || 'Court')}" onerror="this.onerror=null;this.src=<?php echo htmlspecialchars(json_encode(asset_url('assets/images/icon.png')), ENT_QUOTES, 'UTF-8'); ?>;">
           <input class="field" type="text" value="${escapeHtml(state.selectedCourt.name || '')}" disabled>
         </div>
       </div>

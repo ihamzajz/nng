@@ -14,6 +14,155 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="<?php echo htmlspecialchars(asset_url('assets/images/icon.png'), ENT_QUOTES, 'UTF-8'); ?>">
     <link rel="stylesheet" href="<?php echo htmlspecialchars(asset_url('assets/css/public-refresh.css'), ENT_QUOTES, 'UTF-8'); ?>">
+    <style>
+        .vision-mission-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8f5f0 0%, #fffdf9 100%);
+            border-top: 1px solid rgba(197, 160, 40, 0.2);
+            border-bottom: 1px solid rgba(197, 160, 40, 0.2);
+        }
+
+        .vision-card,
+        .mission-card {
+            background: #fff;
+            border-radius: 32px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            height: 100%;
+            border: 1px solid rgba(197, 160, 40, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vision-card:hover,
+        .mission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 28px 40px -15px rgba(0, 0, 0, 0.12);
+            border-color: rgba(197, 160, 40, 0.4);
+        }
+
+        .vision-card::before,
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(135deg, #c5a028, #e6c85c);
+            border-radius: 32px 0 0 32px;
+        }
+
+        .vision-icon,
+        .mission-icon {
+            font-size: 3rem;
+            color: #c5a028;
+            margin-bottom: 1.5rem;
+        }
+
+        .vision-title,
+        .mission-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            font-size: 2rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.25rem;
+            color: #1a2a3a;
+        }
+
+        .vision-text,
+        .mission-text {
+            color: #4a5b6e;
+            line-height: 1.7;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .objectives-wrapper {
+            margin-top: 3rem;
+            background: #fff;
+            border-radius: 40px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(197, 160, 40, 0.2);
+        }
+
+        .objectives-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            font-size: 1.9rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1a2a3a;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .objectives-title::after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 3px;
+            background: #c5a028;
+            margin: 0.8rem auto 0;
+            border-radius: 2px;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .objective-item {
+            background: #fefcf8;
+            padding: 1.25rem 1.5rem;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            border-left: 3px solid #c5a028;
+        }
+
+        .objective-item:hover {
+            background: #fff;
+            transform: translateX(6px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .objective-icon {
+            font-size: 1.8rem;
+            color: #c5a028;
+            min-width: 45px;
+            text-align: center;
+        }
+
+        .objective-text {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #2c3e44;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .vision-mission-section {
+                padding: 3rem 0;
+            }
+
+            .vision-card,
+            .mission-card {
+                padding: 1.8rem;
+            }
+
+            .objectives-wrapper {
+                padding: 1.5rem;
+            }
+        }
+    </style>
 </head>
 
 <body class="page-about">
@@ -76,6 +225,57 @@
                         <li><strong>Mrs. Asma Ali Shah</strong> <span class="suffix">Nominee Member</span></li>
                     </ul>
                     <div class="members-footer">Est. 2018 | North Nazimabad Gymkhana Trust</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="vision-mission-section" data-aos="fade-up" data-aos-delay="250">
+            <div class="container">
+                <div class="row g-4 mb-5">
+                    <div class="col-md-6" data-aos="fade-right" data-aos-delay="300">
+                        <div class="vision-card">
+                            <div class="vision-icon"><i class="bi bi-eye-fill"></i></div>
+                            <h3 class="vision-title">Vision</h3>
+                            <p class="vision-text">To be a leading recreational and sports institution that promotes a healthy, active, and socially connected lifestyle for residents of North Nazimabad and all over Pakistan.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6" data-aos="fade-left" data-aos-delay="350">
+                        <div class="mission-card">
+                            <div class="mission-icon"><i class="bi bi-bullseye"></i></div>
+                            <h3 class="mission-title">Mission</h3>
+                            <p class="mission-text">To provide high-quality sports, fitness, and recreational facilities in a safe, inclusive, and family-friendly environment, while promoting physical well-being, social interaction, and community development across Pakistan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="objectives-wrapper" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="objectives-title">Our Strategic Objectives</h3>
+                    <div class="objectives-grid">
+                        <div class="objective-item">
+                            <div class="objective-icon"><i class="bi bi-building"></i></div>
+                            <p class="objective-text">To develop, manage, and maintain modern sports and recreational facilities for members and visitors.</p>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-icon"><i class="bi bi-heart-pulse"></i></div>
+                            <p class="objective-text">To promote health, fitness, and well-being among individuals of all age groups across Pakistan.</p>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-icon"><i class="bi bi-shield-check"></i></div>
+                            <p class="objective-text">To provide a safe, secure, and family-oriented environment for recreational and social activities.</p>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-icon"><i class="bi bi-trophy"></i></div>
+                            <p class="objective-text">To organize sports events, tournaments, and cultural programs to encourage community participation.</p>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-icon"><i class="bi bi-people"></i></div>
+                            <p class="objective-text">To foster social cohesion, networking, and community engagement among members.</p>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-icon"><i class="bi bi-graph-up"></i></div>
+                            <p class="objective-text">To continuously improve and expand facilities in line with modern standards and community needs.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
